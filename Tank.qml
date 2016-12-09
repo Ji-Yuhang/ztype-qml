@@ -2,8 +2,10 @@ import QtQuick 2.0
 
 Rectangle {
     property string word: ""
+    property string visible_word: ""
+
 //    color: Qt.rgba(Math.random(),Math.random(),Math.random(),Math.random())
-    color: "red"
+    color: "black"
     width: text.width + 10
     height: text.height + 2
     Component.onCompleted: {
@@ -14,13 +16,24 @@ Rectangle {
     function start() {
         timer.start();
     }
+    function custom_destroy() {
+        timer.stop()
+//        visible = false
+        destroy()
+        console.log("destroy")
+    }
+//    onDestroyed:
+//    onDestroyed: {
+//        console.log("onDestroyed")
+//    }
+
     Text {
         id: text
-        text: word
+        text: visible_word
         visible: true
-        color: "green"
+        color: "white"
         font {
-            pointSize: 12
+            pointSize: 14
         }
 
         anchors.centerIn: parent
