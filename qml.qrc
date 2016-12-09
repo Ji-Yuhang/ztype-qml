@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Tank.qml</file>
+        <file>macmillan_all_words.txt</file>
+    </qresource>
+</RCC>
