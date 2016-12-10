@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick multimedia multimediawidgets
 CONFIG += c++11
 
 SOURCES += main.cpp
@@ -14,7 +14,8 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 DISTFILES += \
-    Tank.qml
+    Tank.qml \
+    Lock.qml
 macx {
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
 }

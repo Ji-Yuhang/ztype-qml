@@ -3,6 +3,7 @@ import QtQuick 2.0
 Rectangle {
     property string word: ""
     property string visible_word: ""
+    property bool current: false
 
 //    color: Qt.rgba(Math.random(),Math.random(),Math.random(),Math.random())
     color: "black"
@@ -10,6 +11,14 @@ Rectangle {
     height: text.height + 2
     Component.onCompleted: {
 
+
+    }
+    onCurrentChanged: {
+        z = 2
+
+    }
+    NumberAnimation on x {
+//        to: 300
 
     }
 
@@ -31,7 +40,7 @@ Rectangle {
         id: text
         text: visible_word
         visible: true
-        color: "white"
+        color: current ? "yellow":"white"
         font {
             pointSize: 14
         }
@@ -46,12 +55,14 @@ Rectangle {
 //    Component.onCompleted:
     Timer {
         id:timer
-        interval: 500
+        interval: 100
         repeat: true
         onTriggered: {
-            x += Math.abs((Math.random() * 100 - 50) / 10)
+            x += (Math.random() * 100 - 50) / 100
+//            if (x > parent.width) x -= 5
+//            if (x < 0) x +=5
 
-            y += Math.random() * 10
+            y += Math.random() * 2
 
         }
     }

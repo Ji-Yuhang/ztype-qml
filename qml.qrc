@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>Tank.qml</file>
         <file>macmillan_all_words.txt</file>
+        <file>Lock.qml</file>
     </qresource>
 </RCC>
