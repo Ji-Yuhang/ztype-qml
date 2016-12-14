@@ -7,6 +7,7 @@ Window {
     property Component component: null
 
     property Component lock_component: null
+    property Component bullet_component: null
 
     property var words: []
 
@@ -16,9 +17,9 @@ Window {
     property var last_buller_audio: null
 
     visible: true
-    width: 640
-    height: 480
-    title: qsTr("Hello World")
+    width: 460//640
+    height: 720//480
+    title: qsTr("Ztype-qml by Ji-Yuhang")
     function random_word() {
         var tanks_words_first_letters = null
         if (tanks.length != 0 ) tanks.map(function(t){return t.word[0];})
@@ -77,15 +78,21 @@ Window {
         request.send()
 
         console.log("seekable",bullet_audio.seekable)
-//        mediaplayer.play()
+        console.log(mediaplayer, mediaplayer.availability, mediaplayer.status)
+        playSound.play()
+
     }
 
     MouseArea {
         id:area
         anchors.fill: parent
         onClicked: {
+            mediaplayer.play()
+
             timer.start()
+            console.log("mediaplaye error:",mediaplayer.errorString)
 //            redalert_audio.play()
+            playSound.play()
         }
 
     }
@@ -115,8 +122,17 @@ Window {
             anchors.fill: parent
             id: back
             z: 0
-            source: "file:///Users/jiyuhang/git/ztype-qml/img/back.jpg"
-            fillMode: Image.Tile
+//            source: "file:///Users/jiyuhang/git/ztype-qml/img/back.jpg"
+            source: "qrc:/ztype/gradient.png"
+//            fillMode: Image.Tile
+        }
+        Image {
+            anchors.fill: parent
+            id: grid
+            opacity: 0.3
+            z: 1
+            source: "qrc:/ztype/grid.png"
+//            fillMode: Image.Tile
         }
 //        Canvas {
 //            anchors.fill: parent
@@ -205,6 +221,7 @@ Window {
 //                            bullet_audio.stop()
 //                            bullet_audio.seek(0.3)
 //                            bullet_audio.play()
+//                            component
                             play_bullet_audio()
 
                         } else {
@@ -225,7 +242,8 @@ Window {
             }
             else if(stack.length != 0) {
                 letter = stack[0].toLowerCase()
-                if (letter === lower_case_letter) {
+                if(letter == 'é') letter = 'e'
+                if (letter == lower_case_letter) {
                     stack.shift()
                     if (stack.length == 0) {
 
@@ -265,6 +283,7 @@ Window {
 //                    bullet_audio.stop()
 //                    bullet_audio.seek(0.3)
 //                    bullet_audio.play()
+                    create_bullet(target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
                     play_bullet_audio()
 
                 } else {
@@ -275,6 +294,26 @@ Window {
             console.log("stack",stack)
         }
     }
+    function create_bullet(x,y){
+        if (!bullet_component)
+            bullet_component = Qt.createComponent("Bullet.qml");
+        if (bullet_component.status == Component.Ready) {
+//            var x = Math.random() * 100 * 6
+//            var y = 10 * i
+//            var word = random_word()
+            var lock = bullet_component.createObject(view,{"x":500, "y":600 ,"to_x":x, "to_y":y});
+//            tanks.push(tank)
+//            tank.start()
+            console.log(bullet_component, lock, x,y);
+
+        } else {
+            console.log(bullet_component, "errString",bullet_component.errorString());
+
+        }
+
+        console.log(bullet_component, "bullet onTriggered",bullet_component.status);
+
+    }
 
     function create_tank(i) {
         if (!component)
@@ -283,6 +322,7 @@ Window {
             var x = Math.random() * 100 * 6
             var y = 10 * i
             var word = random_word()
+            if (i == 1) word = "café"
             var tank = component.createObject(view,{"x":x, "y":y, word: word, visible_word: word });
             tanks.push(tank)
             tank.start()
@@ -293,7 +333,7 @@ Window {
 
         }
 
-        console.log(component, "onTriggered",component.status);
+//        console.log(component, "onTriggered",component.status);
 
     }
     function lock_animation(x,y) {
@@ -359,10 +399,24 @@ Window {
     }
     Audio {
         id: mediaplayer
+        autoLoad: true
+        autoPlay: true
+        loops: Audio.Infinite
+        volume: 1
+//        source: "file:///Users/jiyuhang/Music/网易云音乐/魏小涵 - 飞雪玉花.mp3"
+//        source: "./ztype/endure.ogg"
+//        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/endure.ogg"
+        source: "file:///Users/jiyuhang/Desktop/endure.mp3"
+
+
+    }
+    SoundEffect {
+        id: playSound
 //        autoLoad: true
 //        autoPlay: true
-        source: "file:///Users/jiyuhang/Music/网易云音乐/魏小涵 - 飞雪玉花.mp3"
-
+        loops: SoundEffect.Infinite
+//        source: "./ztype/endure.ogg"
+        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/endure.ogg"
     }
     Audio {
         id:redalert_audio
@@ -373,32 +427,43 @@ Window {
     Audio {
         id:bullet_audio
         autoLoad: true
-        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
     }
     Audio {
         id:bullet_audio1
         autoLoad: true
-        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+
     }
     Audio {
         id:bullet_audio2
         autoLoad: true
-        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+
     }
     Audio {
         id:bullet_audio3
         autoLoad: true
-        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+
     }
     Audio {
         id:bullet_audio4
         autoLoad: true
-        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+
     }
     Audio {
         id:bullet_audio5
         autoLoad: true
-        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+
     }
 
 //   /Users/jiyuhang/Music/网易云音乐

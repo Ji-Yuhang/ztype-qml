@@ -15,7 +15,8 @@ include(deployment.pri)
 
 DISTFILES += \
     Tank.qml \
-    Lock.qml
+    Lock.qml \
+    Bullet.qml
 macx {
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
 }
