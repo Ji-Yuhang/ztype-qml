@@ -122,8 +122,8 @@ Window {
             anchors.fill: parent
             id: back
             z: 0
-//            source: "file:///Users/jiyuhang/git/ztype-qml/img/back.jpg"
-            source: "qrc:/ztype/gradient.png"
+            source: "file:///Users/jiyuhang/git/ztype-qml/ztype/gradient.png"
+//            source: "qrc:/ztype/gradient.png"
 //            fillMode: Image.Tile
         }
         Image {
@@ -131,7 +131,9 @@ Window {
             id: grid
             opacity: 0.3
             z: 1
-            source: "qrc:/ztype/grid.png"
+            source: "file:///Users/jiyuhang/git/ztype-qml/ztype/grid.png"
+
+//            source: "qrc:/ztype/grid.png"
 //            fillMode: Image.Tile
         }
 //        Canvas {

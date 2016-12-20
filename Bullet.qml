@@ -7,7 +7,12 @@ Item {
     height: 100
     property var to_x: null
     property var to_y: null
-    rotation: Math.atan(1.0 * (to_x - x) / (to_y - y))
+    rotation: {
+
+        var ro = 360 - Math.atan(1.0 * (to_x - x) / (to_y - y)) *180 / Math.PI
+        console.log("bullet, rotation: ", ro)
+        return ro
+    }
     
 //    onXChanged: {
 //        console.log("onXChanged",x,to_x,to_y,Math.abs(x - to_x),Math.abs(y - to_y))
@@ -29,7 +34,7 @@ Item {
         z:4
         anchors.fill: parent
 //        source: "qrc:/ztype/plasma.png"
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.png"
+        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.png"
 
 //        qrc:/ztype/plasma.png
     }
