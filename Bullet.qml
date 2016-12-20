@@ -7,7 +7,8 @@ Item {
     height: 100
     property var to_x: null
     property var to_y: null
-//    rotation:
+    rotation: Math.atan(1.0 * (to_x - x) / (to_y - y))
+    
 //    onXChanged: {
 //        console.log("onXChanged",x,to_x,to_y,Math.abs(x - to_x),Math.abs(y - to_y))
 //        if (Math.abs(x - to_x) <= 2 && Math.abs(y - to_y) <= 2) {
@@ -28,7 +29,7 @@ Item {
         z:4
         anchors.fill: parent
 //        source: "qrc:/ztype/plasma.png"
-        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.png"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.png"
 
 //        qrc:/ztype/plasma.png
     }
