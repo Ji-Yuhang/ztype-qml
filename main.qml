@@ -66,7 +66,7 @@ Window {
 
     Component.onCompleted: {
         var request = new XMLHttpRequest
-        request.open("GET","qrc:/macmillan_all_words.txt")
+        request.open("GET","qrc:/collins_1_list_1.txt")
         request.onreadystatechange = function() {
             if (request.readyState == XMLHttpRequest.DONE) {
                 var doc = request.responseText;
@@ -191,7 +191,7 @@ Window {
                 for (var i = 0; i < tanks_words_first_letters.length; i++) {
                     //                String.fromCharCode(65).toLowerCase()
                     var letter = null
-                    if (stack.length == 0) {
+                    if (stack.length == 0 && tanks_words_first_letters[i]) {
                         letter = tanks_words_first_letters[i].toLowerCase()
                         if (letter === lower_case_letter) {
                             for (var j = 1; j < tanks_words[i].length; j++) {
@@ -324,7 +324,7 @@ Window {
             var x = Math.random() * 100 * 6
             var y = 10 * i
             var word = random_word()
-            if (i == 1) word = "café"
+//            if (i == 1) word = "café"
             var tank = component.createObject(view,{"x":x, "y":y, word: word, visible_word: word });
             tanks.push(tank)
             tank.start()

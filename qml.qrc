@@ -2,8 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Tank.qml</file>
-        <file>macmillan_all_words.txt</file>
         <file>Lock.qml</file>
         <file>Bullet.qml</file>
+        <file>collins_1_list_1.txt</file>
     </qresource>
 </RCC>
