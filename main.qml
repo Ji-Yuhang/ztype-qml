@@ -1,6 +1,7 @@
 import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtMultimedia 5.5
+import an.qt.PlayerHelper 1.0
 Window {
     id: root
 
@@ -82,15 +83,19 @@ Window {
         playSound.play()
 
     }
+    PlayerHelper {
+        id: player_helper
+    }
 
     MouseArea {
         id:area
         anchors.fill: parent
         onClicked: {
-            mediaplayer.play()
+//            mediaplayer.play()
+            player_helper.play("/home/jiyuhang/git/ztype-qml/ztype/endure.ogg")
 
             timer.start()
-            console.log("mediaplaye error:",mediaplayer.errorString)
+//            console.log("mediaplaye error:",mediaplayer.errorString)
 //            redalert_audio.play()
             playSound.play()
         }
@@ -122,7 +127,7 @@ Window {
             anchors.fill: parent
             id: back
             z: 0
-            source: "file:///Users/jiyuhang/git/ztype-qml/ztype/gradient.png"
+            source: "file:///home/jiyuhang/git/ztype-qml/ztype/gradient.png"
 //            source: "qrc:/ztype/gradient.png"
 //            fillMode: Image.Tile
         }
@@ -131,11 +136,20 @@ Window {
             id: grid
             opacity: 0.3
             z: 1
-            source: "file:///Users/jiyuhang/git/ztype-qml/ztype/grid.png"
+            source: "file:///home/jiyuhang/git/ztype-qml/ztype/grid.png"
 
 //            source: "qrc:/ztype/grid.png"
 //            fillMode: Image.Tile
         }
+        Oppressor {
+            id: oppressor
+            width: 50
+            height: 50
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+
+        }
+
 //        Canvas {
 //            anchors.fill: parent
 //            onPaint: {
@@ -303,7 +317,8 @@ Window {
 //            var x = Math.random() * 100 * 6
 //            var y = 10 * i
 //            var word = random_word()
-            var lock = bullet_component.createObject(view,{"x":500, "y":600 ,"to_x":x, "to_y":y});
+            var lock = bullet_component.createObject(view,{"x":oppressor.x, "y":oppressor.y ,"to_x":x, "to_y":y});
+//            oppressor.x()
 //            tanks.push(tank)
 //            tank.start()
             console.log(bullet_component, lock, x,y);
@@ -360,24 +375,30 @@ Window {
 
     }
     function play_bullet_audio(){
+        console.log("play_bullet_audio");
+        player_helper.play("/home/jiyuhang/git/ztype-qml/ztype/plasma.mp3");
+        console.log("player_helper");
+
 //        last_buller_audio
-        var temp = last_buller_audio
+//        var temp = last_buller_audio;
 //        if (last_buller_audio) {last_buller_audio.stop();last_buller_audio.seek(0)}
-        if (bullet_audio.playbackState !=
-                Audio.PlayingState) {bullet_audio.seek(0); bullet_audio.stop();bullet_audio.play(); last_buller_audio = bullet_audio ;return}
-        if (bullet_audio1.playbackState !=
-                Audio.PlayingState) {bullet_audio1.seek(0); bullet_audio1.stop(); bullet_audio1.play(); last_buller_audio = bullet_audio1 ; return}
-        if (bullet_audio2.playbackState !=
-                Audio.PlayingState) {bullet_audio2.seek(0); bullet_audio2.stop(); bullet_audio2.play();  last_buller_audio = bullet_audio2 ;return}
-        if (bullet_audio3.playbackState !=
-                Audio.PlayingState) {bullet_audio3.seek(0); bullet_audio3.stop(); bullet_audio3.play();  last_buller_audio = bullet_audio3 ;return}
-        if (bullet_audio4.playbackState !=
-                Audio.PlayingState) {bullet_audio4.seek(0); bullet_audio4.stop(); bullet_audio4.play();  last_buller_audio = bullet_audio4 ;return}
-        if (bullet_audio5.playbackState !=
-                Audio.PlayingState) {bullet_audio5.seek(0); bullet_audio5.stop(); bullet_audio5.play(); last_buller_audio = bullet_audio5 ; return}
-        if (temp) temp.stop()
-        if (temp) {temp.stop();temp.seek(0);}
-        console.log("play_bullet_audio: [0...5]",bullet_audio.position, bullet_audio1.position,bullet_audio2.position,bullet_audio3.position,bullet_audio4.position,bullet_audio5.position)
+//        if (bullet_audio.playbackState !=
+//                Audio.PlayingState) {bullet_audio.seek(0); bullet_audio.stop();bullet_audio.play(); last_buller_audio = bullet_audio ;return}
+//        if (bullet_audio1.playbackState !=
+//                Audio.PlayingState) {bullet_audio1.seek(0); bullet_audio1.stop(); bullet_audio1.play(); last_buller_audio = bullet_audio1 ; return}
+//        if (bullet_audio2.playbackState !=
+//                Audio.PlayingState) {bullet_audio2.seek(0); bullet_audio2.stop(); bullet_audio2.play();  last_buller_audio = bullet_audio2 ;return}
+//        if (bullet_audio3.playbackState !=
+//                Audio.PlayingState) {bullet_audio3.seek(0); bullet_audio3.stop(); bullet_audio3.play();  last_buller_audio = bullet_audio3 ;return}
+//        if (bullet_audio4.playbackState !=
+//                Audio.PlayingState) {bullet_audio4.seek(0); bullet_audio4.stop(); bullet_audio4.play();  last_buller_audio = bullet_audio4 ;return}
+//        if (bullet_audio5.playbackState !=
+//                Audio.PlayingState) {bullet_audio5.seek(0); bullet_audio5.stop(); bullet_audio5.play(); last_buller_audio = bullet_audio5 ; return}
+//        if (temp) temp.stop()
+//        if (temp) {temp.stop();temp.seek(0);}
+//        console.log("play_bullet_audio: [0...5]",bullet_audio.position, bullet_audio1.position,bullet_audio2.position,bullet_audio3.position,bullet_audio4.position,bullet_audio5.position)
+//        bullet_audio.play()
+//        system
 
 
 
@@ -405,10 +426,10 @@ Window {
         autoPlay: true
         loops: Audio.Infinite
         volume: 1
-//        source: "file:///Users/jiyuhang/Music/网易云音乐/魏小涵 - 飞雪玉花.mp3"
+//        source: "file:///home/jiyuhang/Music/网易云音乐/魏小涵 - 飞雪玉花.mp3"
 //        source: "./ztype/endure.ogg"
-//        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/endure.ogg"
-        source: "file:///Users/jiyuhang/Desktop/endure.mp3"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/endure.ogg"
+//        source: "file:///home/jiyuhang/Desktop/endure.mp3"
 
 
     }
@@ -418,57 +439,57 @@ Window {
 //        autoPlay: true
         loops: SoundEffect.Infinite
 //        source: "./ztype/endure.ogg"
-        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/endure.ogg"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/endure.ogg"
     }
     Audio {
         id:redalert_audio
         autoLoad: true
         loops: Audio.Infinite
-        source: "file:///Users/jiyuhang/git/ztype-qml/wav/红警原子弹声音.wav"
+        source: "file:///home/jiyuhang/git/ztype-qml/wav/红警原子弹声音.wav"
     }
     Audio {
         id:bullet_audio
         autoLoad: true
-//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
     }
     Audio {
         id:bullet_audio1
         autoLoad: true
-//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
 
     }
     Audio {
         id:bullet_audio2
         autoLoad: true
-//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
 
     }
     Audio {
         id:bullet_audio3
         autoLoad: true
-//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
 
     }
     Audio {
         id:bullet_audio4
         autoLoad: true
-//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
 
     }
     Audio {
         id:bullet_audio5
         autoLoad: true
-//        source: "file:///Users/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
 
     }
 
-//   /Users/jiyuhang/Music/网易云音乐
+//   /home/jiyuhang/Music/网易云音乐
 
     //    focus: true
 

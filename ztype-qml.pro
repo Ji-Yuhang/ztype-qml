@@ -3,7 +3,8 @@ TEMPLATE = app
 QT += qml quick multimedia multimediawidgets
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    playerhelper.cpp
 
 RESOURCES += qml.qrc
 
@@ -16,7 +17,11 @@ include(deployment.pri)
 DISTFILES += \
     Tank.qml \
     Lock.qml \
-    Bullet.qml
+    Bullet.qml \
+    Oppressor.qml
 macx {
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
 }
+
+HEADERS += \
+    playerhelper.h

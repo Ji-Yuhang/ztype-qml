@@ -10,7 +10,7 @@ Item {
     rotation: {
 
         var ro = 360 - Math.atan(1.0 * (to_x - x) / (to_y - y)) *180 / Math.PI
-        console.log("bullet, rotation: ", ro)
+//        console.log("bullet, rotation: ", ro)
         return ro
     }
     
@@ -34,7 +34,7 @@ Item {
         z:4
         anchors.fill: parent
 //        source: "qrc:/ztype/plasma.png"
-        source: "file:///Users/jiyuhang/git/ztype-qml/ztype/plasma.png"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.png"
 
 //        qrc:/ztype/plasma.png
     }
