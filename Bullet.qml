@@ -5,6 +5,9 @@ Item {
     z:3
     width: 100
     height: 100
+    property var from_x: null
+    property var from_y: null
+
     property var to_x: null
     property var to_y: null
     rotation: {
@@ -50,7 +53,7 @@ Item {
 //        from: x
         target: root
         property: "x"
-        from: 500
+        from: from_x
         to: to_x
 //        property: 'pos'
         duration: 500
@@ -76,7 +79,7 @@ Item {
 //        from: x
         target: root
         property: "y"
-        from: 600
+        from: from_y
         to: to_y
         running: true
 //        loops: Animation.Infinite

@@ -5,6 +5,8 @@ Rectangle {
     property string visible_word: ""
     property bool current: false
 
+    id: tank
+
 //    color: Qt.rgba(Math.random(),Math.random(),Math.random(),Math.random())
     color: "black"
     width: text.width + 10
@@ -28,8 +30,8 @@ Rectangle {
     function custom_destroy() {
         timer.stop()
 //        visible = false
-        destroy()
-        console.log("destroy")
+//        destroy()
+        destroy_timer.start()
     }
 //    onDestroyed:
 //    onDestroyed: {
@@ -64,6 +66,14 @@ Rectangle {
 
             y += Math.random() * 2
 
+        }
+    }
+    Timer {
+        id: destroy_timer
+        interval: 1000
+        onTriggered: {
+            tank.destroy()
+            console.log("destroy")
         }
     }
 

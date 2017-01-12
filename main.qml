@@ -78,9 +78,10 @@ Window {
         }
         request.send()
 
-        console.log("seekable",bullet_audio.seekable)
-        console.log(mediaplayer, mediaplayer.availability, mediaplayer.status)
-        playSound.play()
+//        console.log("seekable",bullet_audio.seekable)
+//        console.log(mediaplayer, mediaplayer.availability, mediaplayer.status)
+//        playSound.play()
+        player_helper.play("/home/jiyuhang/git/ztype-qml/ztype/endure.ogg")
 
     }
     PlayerHelper {
@@ -92,12 +93,11 @@ Window {
         anchors.fill: parent
         onClicked: {
 //            mediaplayer.play()
-            player_helper.play("/home/jiyuhang/git/ztype-qml/ztype/endure.ogg")
 
             timer.start()
 //            console.log("mediaplaye error:",mediaplayer.errorString)
 //            redalert_audio.play()
-            playSound.play()
+//            playSound.play()
         }
 
     }
@@ -317,11 +317,11 @@ Window {
 //            var x = Math.random() * 100 * 6
 //            var y = 10 * i
 //            var word = random_word()
-            var lock = bullet_component.createObject(view,{"x":oppressor.x, "y":oppressor.y ,"to_x":x, "to_y":y});
+            var bullet = bullet_component.createObject(view,{"x":oppressor.x, "y":oppressor.y,"from_x":oppressor.x - oppressor.width / 2,"from_y":oppressor.y - oppressor.height,"to_x":x, "to_y":y});
 //            oppressor.x()
 //            tanks.push(tank)
 //            tank.start()
-            console.log(bullet_component, lock, x,y);
+            console.log("create_bullet",bullet_component, bullet,oppressor,oppressor.x, oppressor.y,oppressor.Center,oppressor.horizontalCenter, x,y);
 
         } else {
             console.log(bullet_component, "errString",bullet_component.errorString());
