@@ -10,6 +10,8 @@ Item {
 
     property var to_x: null
     property var to_y: null
+    property var target_stack: null
+
     rotation: {
 
         var ro = 360 - Math.atan(1.0 * (to_x - x) / (to_y - y)) *180 / Math.PI
@@ -54,7 +56,7 @@ Item {
         target: root
         property: "x"
         from: from_x
-        to: to_x
+        to: target_stack.x - target_stack.width / 2
 //        property: 'pos'
         duration: 500
         running: true
@@ -80,7 +82,7 @@ Item {
         target: root
         property: "y"
         from: from_y
-        to: to_y
+        to: target_stack.y - target_stack.height / 2
         running: true
 //        loops: Animation.Infinite
         loops: 1

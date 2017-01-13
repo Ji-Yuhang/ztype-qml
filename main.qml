@@ -302,7 +302,7 @@ Window {
 //                    bullet_audio.stop()
 //                    bullet_audio.seek(0.3)
 //                    bullet_audio.play()
-                    create_bullet(target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
+                    create_bullet(target_stack, target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
                     play_bullet_audio()
 
                 } else {
@@ -313,14 +313,14 @@ Window {
             console.log("stack",stack)
         }
     }
-    function create_bullet(x,y){
+    function create_bullet(target_stack,x,y){
         if (!bullet_component)
             bullet_component = Qt.createComponent("Bullet.qml");
         if (bullet_component.status == Component.Ready) {
 //            var x = Math.random() * 100 * 6
 //            var y = 10 * i
 //            var word = random_word()
-            var bullet = bullet_component.createObject(view,{"x":oppressor.x, "y":oppressor.y,"from_x":oppressor.x - oppressor.width / 2,"from_y":oppressor.y - oppressor.height,"to_x":x, "to_y":y});
+            var bullet = bullet_component.createObject(view,{"x":oppressor.x, "y":oppressor.y,"from_x":oppressor.x - oppressor.width / 2,"from_y":oppressor.y - oppressor.height,"to_x":x, "to_y":y, "target_stack": target_stack});
 //            oppressor.x()
 //            tanks.push(tank)
 //            tank.start()
