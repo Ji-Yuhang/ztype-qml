@@ -275,6 +275,9 @@ Window {
 
                             target_stack.visible_word = ""
                             target_stack.custom_destroy()
+                        player_helper.play("http://media.shanbay.com/audio/uk/"+target_stack.word+".mp3");
+
+
                             target_stack = null
                         if (index != null){
 //                            console.log("will shift tanks ",index,tanks, tanks.length)

@@ -18,7 +18,8 @@ DISTFILES += \
     Tank.qml \
     Lock.qml \
     Bullet.qml \
-    Oppressor.qml
+    Oppressor.qml \
+    shanbay.js
 macx {
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
 }

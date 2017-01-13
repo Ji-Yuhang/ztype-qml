@@ -1,5 +1,5 @@
-import QtQuick 2.0
-
+﻿import QtQuick 2.0
+import "qrc:/shanbay.js" as Shanbay
 Rectangle {
     property string word: ""
     property string visible_word: ""
@@ -74,7 +74,9 @@ Rectangle {
         onTriggered: {
             tank.destroy()
             console.log("destroy")
+//            Shanbay.shanbay(word, function(data){
+//                console.log(data)
+//            })
         }
     }
-
 }
