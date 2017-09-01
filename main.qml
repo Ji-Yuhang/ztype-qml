@@ -81,7 +81,7 @@ Window {
 //        console.log("seekable",bullet_audio.seekable)
 //        console.log(mediaplayer, mediaplayer.availability, mediaplayer.status)
 //        playSound.play()
-        player_helper.play("/home/jiyuhang/git/ztype-qml/ztype/endure.ogg")
+        player_helper.play("/home/jipai/git/ztype-qml/ztype/endure.ogg")
 
     }
     PlayerHelper {
@@ -127,7 +127,7 @@ Window {
             anchors.fill: parent
             id: back
             z: 0
-            source: "file:///home/jiyuhang/git/ztype-qml/ztype/gradient.png"
+            source: "file:///home/jipai/git/ztype-qml/ztype/gradient.png"
 //            source: "qrc:/ztype/gradient.png"
 //            fillMode: Image.Tile
         }
@@ -136,7 +136,7 @@ Window {
             id: grid
             opacity: 0.3
             z: 1
-            source: "file:///home/jiyuhang/git/ztype-qml/ztype/grid.png"
+            source: "file:///home/jipai/git/ztype-qml/ztype/grid.png"
 
 //            source: "qrc:/ztype/grid.png"
 //            fillMode: Image.Tile
@@ -379,7 +379,7 @@ Window {
     }
     function play_bullet_audio(){
         console.log("play_bullet_audio");
-        player_helper.play("/home/jiyuhang/git/ztype-qml/ztype/plasma.mp3");
+        player_helper.play("/home/jipai/git/ztype-qml/ztype/plasma.mp3");
         console.log("player_helper");
 
 //        last_buller_audio
@@ -429,10 +429,10 @@ Window {
         autoPlay: true
         loops: Audio.Infinite
         volume: 1
-//        source: "file:///home/jiyuhang/Music/网易云音乐/魏小涵 - 飞雪玉花.mp3"
+//        source: "file:///home/jipai/Music/网易云音乐/魏小涵 - 飞雪玉花.mp3"
 //        source: "./ztype/endure.ogg"
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/endure.ogg"
-//        source: "file:///home/jiyuhang/Desktop/endure.mp3"
+        source: "file:///home/jipai/git/ztype-qml/ztype/endure.ogg"
+//        source: "file:///home/jipai/Desktop/endure.mp3"
 
 
     }
@@ -442,57 +442,57 @@ Window {
 //        autoPlay: true
         loops: SoundEffect.Infinite
 //        source: "./ztype/endure.ogg"
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/endure.ogg"
+        source: "file:///home/jipai/git/ztype-qml/ztype/endure.ogg"
     }
     Audio {
         id:redalert_audio
         autoLoad: true
         loops: Audio.Infinite
-        source: "file:///home/jiyuhang/git/ztype-qml/wav/红警原子弹声音.wav"
+        source: "file:///home/jipai/git/ztype-qml/wav/红警原子弹声音.wav"
     }
     Audio {
         id:bullet_audio
         autoLoad: true
-//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
     }
     Audio {
         id:bullet_audio1
         autoLoad: true
-//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
 
     }
     Audio {
         id:bullet_audio2
         autoLoad: true
-//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
 
     }
     Audio {
         id:bullet_audio3
         autoLoad: true
-//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
 
     }
     Audio {
         id:bullet_audio4
         autoLoad: true
-//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
 
     }
     Audio {
         id:bullet_audio5
         autoLoad: true
-//        source: "file:///home/jiyuhang/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
 
     }
 
-//   /home/jiyuhang/Music/网易云音乐
+//   /home/jipai/Music/网易云音乐
 
     //    focus: true
 

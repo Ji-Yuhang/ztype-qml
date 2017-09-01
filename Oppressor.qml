@@ -5,6 +5,6 @@ Item {
         id: image
         z:5
         anchors.fill: parent
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/oppressor.png"
+        source: "file:///home/jipai/git/ztype-qml/ztype/oppressor.png"
     }
 }

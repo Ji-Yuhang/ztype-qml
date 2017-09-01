@@ -15,6 +15,6 @@ function shanbay(word, callback){
         }
     }
     request.send()
-//    player_helper.play("/home/jiyuhang/git/ztype-qml/ztype/endure.ogg")
+//    player_helper.play("/home/jipai/git/ztype-qml/ztype/endure.ogg")
 }
 
