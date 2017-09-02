@@ -17,6 +17,8 @@ Window {
     property var target_stack: null
     property var last_buller_audio: null
 
+    modality: Qt.WindowModal
+
     visible: true
     width: 460//640
     height: 720//480

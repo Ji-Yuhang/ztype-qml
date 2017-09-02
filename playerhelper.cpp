@@ -24,9 +24,10 @@ void PlayerHelper::play(const QString &mp3_path)
 //    player->setVolume(50);
 //    player->play();
 
-    QString command = QString("C:/Program\ Files\ (x86)/VideoLAN/VLC/vlc.exe  %1").arg(path);
-    bool s = QProcess::startDetached(command);
-    qDebug() << "play" << command << s;
+    qDebug()<<"Exists?" << QFile::exists("D:/softwore/VLC/vlc.exe");
+//    QString command = QString("D:/softwore/VLC/vlc.exe --no-dummy-quiet  %1").arg(path);
+//    bool s = QProcess::startDetached(command);
+//    qDebug() << "play" << command << s;
 #else
     QString command = QString("/usr/bin/mplayer -really-quiet %1").arg(mp3_path);
     bool s = QProcess::startDetached(command);
