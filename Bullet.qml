@@ -76,8 +76,8 @@ Item {
         id: image
         z:4
         anchors.fill: parent
-//        source: "qrc:/ztype/plasma.png"
-        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.png"
+        source: "qrc:/ztype/plasma.png"
+//        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.png"
 
 //        qrc:/ztype/plasma.png
     }

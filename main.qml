@@ -76,7 +76,7 @@ Window {
 
 //                var json = JSON.parse(doc)
 //                words = json.data.learnings.map(function(learn){return learn.word})
-                words = doc.split("\n")
+                words = doc.split("\n").map(function(w){return w.replace("\r\n",'').replace("\r",'');})
                 console.log("read: " + words.length)
 
             }
@@ -132,20 +132,20 @@ Window {
             anchors.fill: parent
             id: back
             z: 0
-            source: "file:///home/jipai/git/ztype-qml/ztype/gradient.png"
-//            source: "qrc:/ztype/gradient.png"
+//            source: "file:///home/jipai/git/ztype-qml/ztype/gradient.png"
+            source: "qrc:/ztype/gradient.png"
 //            fillMode: Image.Tile
         }
         Image {
 //            anchors.fill: parent
             id: grid
-            width: parent.width * 2 + 100
-            height: parent.height * 2 + 100
+            width: parent.width * 3 + 100
+            height: parent.height * 3 + 100
             opacity: 0.3
             z: 1
-            source: "file:///home/jipai/git/ztype-qml/ztype/grid.png"
+//            source: "file:///home/jipai/git/ztype-qml/ztype/grid.png"
 
-//            source: "qrc:/ztype/grid.png"
+            source: "qrc:/ztype/grid.png"
             fillMode: Image.Tile
         }
 
@@ -164,7 +164,7 @@ Window {
                 if (count >= 100){
                     count = 0
 //                    grid.x = 0
-                    grid.y = -height
+                    grid.y = -view.height
                     grid.opacity = 0.2
                 }
 
@@ -429,7 +429,9 @@ Window {
     }
     function play_bullet_audio(){
         console.log("play_bullet_audio");
-        player_helper.play("/home/jipai/git/ztype-qml/ztype/plasma.mp3");
+//        player_helper.play("/home/jipai/git/ztype-qml/ztype/plasma.mp3");
+        player_helper.play("ztype/plasma.mp3");
+
         console.log("player_helper");
 
 //        last_buller_audio

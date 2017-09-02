@@ -7,5 +7,9 @@
         <file>collins_1_list_1.txt</file>
         <file>Oppressor.qml</file>
         <file>shanbay.js</file>
+        <file>ztype/gradient.png</file>
+        <file>ztype/grid.png</file>
+        <file>ztype/plasma.png</file>
+        <file>ztype/oppressor.png</file>
     </qresource>
 </RCC>
