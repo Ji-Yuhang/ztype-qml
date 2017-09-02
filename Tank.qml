@@ -58,7 +58,7 @@ Rectangle {
 //    Component.onCompleted:
     Timer {
         id:timer
-        interval: 100
+        interval: 200
         repeat: true
         onTriggered: {
             x += (Math.random() * 100 - 50) / 100

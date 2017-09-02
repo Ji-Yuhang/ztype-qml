@@ -68,9 +68,14 @@ Window {
     Component.onCompleted: {
         var request = new XMLHttpRequest
         request.open("GET","qrc:/collins_1_list_1.txt")
+//         request.open("GET","https://iamyuhang.com/api/v1/words/learnings/?token=")
+
         request.onreadystatechange = function() {
             if (request.readyState == XMLHttpRequest.DONE) {
                 var doc = request.responseText;
+
+//                var json = JSON.parse(doc)
+//                words = json.data.learnings.map(function(learn){return learn.word})
                 words = doc.split("\n")
                 console.log("read: " + words.length)
 
@@ -147,7 +152,7 @@ Window {
         Timer {
             id: grid_timer
             property int count: 0
-            interval: 50
+            interval: 100
             running: true;
             repeat: true
 
@@ -158,7 +163,7 @@ Window {
                 if (count >= 100){
                     count = 0
 //                    grid.x = 0
-                    grid.y = 0
+                    grid.y = -height
                 }
             }
         }
@@ -269,6 +274,8 @@ Window {
 //                            bullet_audio.play()
 //                            component
                             play_bullet_audio()
+                            player_helper.play("http://media.shanbay.com/audio/uk/"+target_stack.word+".mp3");
+
                             create_bullet(target_stack, target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
 
 
