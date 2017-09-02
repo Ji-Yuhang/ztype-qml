@@ -8,7 +8,8 @@ Rectangle {
     id: tank
 
 //    color: Qt.rgba(Math.random(),Math.random(),Math.random(),Math.random())
-    color: "black"
+    color: current ? "#132B2B" : 'transparent'
+//    opacity: 0.8
     width: text.width + 10
     height: text.height + 2
     Component.onCompleted: {
@@ -42,7 +43,7 @@ Rectangle {
         id: text
         text: visible_word
         visible: true
-        color: current ? "yellow":"white"
+        color: current ? "orange":"white"
         font {
             pointSize: 14
         }
@@ -62,7 +63,7 @@ Rectangle {
         onTriggered: {
             x += (Math.random() * 100 - 50) / 100
 //            if (x > parent.width) x -= 5
-//            if (x < 0) x +=5
+            if (x < 0) x +=5
 
             y += Math.random() * 2
 

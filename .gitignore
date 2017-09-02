@@ -107,4 +107,4 @@ Makefile*
 
 # QtCtreator CMake
 CMakeLists.txt.user
-
+ztype-qml

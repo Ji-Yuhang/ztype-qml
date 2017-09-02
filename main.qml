@@ -81,7 +81,7 @@ Window {
 //        console.log("seekable",bullet_audio.seekable)
 //        console.log(mediaplayer, mediaplayer.availability, mediaplayer.status)
 //        playSound.play()
-        player_helper.play("/home/jipai/git/ztype-qml/ztype/endure.ogg")
+//        player_helper.play("/home/jipai/git/ztype-qml/ztype/endure.ogg")
 
     }
     PlayerHelper {
@@ -132,14 +132,35 @@ Window {
 //            fillMode: Image.Tile
         }
         Image {
-            anchors.fill: parent
+//            anchors.fill: parent
             id: grid
+            width: parent.width * 2 + 100
+            height: parent.height * 2 + 100
             opacity: 0.3
             z: 1
             source: "file:///home/jipai/git/ztype-qml/ztype/grid.png"
 
 //            source: "qrc:/ztype/grid.png"
-//            fillMode: Image.Tile
+            fillMode: Image.Tile
+        }
+
+        Timer {
+            id: grid_timer
+            property int count: 0
+            interval: 50
+            running: true;
+            repeat: true
+
+            onTriggered: {
+//              grid.x = grid.x - 1
+              grid.y = grid.y + 1
+              count += 1
+                if (count >= 100){
+                    count = 0
+//                    grid.x = 0
+                    grid.y = 0
+                }
+            }
         }
         Oppressor {
             id: oppressor
@@ -161,8 +182,17 @@ Window {
         Keys.enabled: true
         Keys.onPressed: {
             var key = event.key
-//            console.log("key pressed",key)
+            console.log("key pressed",key)
             event.accepted = true;
+
+            if (key == Qt.Key_Enter || key == Qt.Key_Return){
+                console.log('KeyEnter')
+                create_tank(0)
+                create_tank(1)
+                create_tank(2)
+                create_tank(3)
+                return
+            }
 
             var tanks_words = get_tanks_words()
             var tanks_words_first_letters = get_tanks_words_first_letters()
@@ -239,6 +269,8 @@ Window {
 //                            bullet_audio.play()
 //                            component
                             play_bullet_audio()
+                            create_bullet(target_stack, target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
+
 
                         } else {
                             //                        key_error(lower_case_letter, "按键出错")
@@ -313,6 +345,11 @@ Window {
             console.log("stack",stack)
         }
     }
+    function changed_rotation(ro){
+        oppressor.rotation = ro
+
+    }
+
     function create_bullet(target_stack,x,y){
         if (!bullet_component)
             bullet_component = Qt.createComponent("Bullet.qml");
@@ -320,11 +357,12 @@ Window {
 //            var x = Math.random() * 100 * 6
 //            var y = 10 * i
 //            var word = random_word()
-            var bullet = bullet_component.createObject(view,{"x":oppressor.x, "y":oppressor.y,"from_x":oppressor.x - oppressor.width / 2,"from_y":oppressor.y - oppressor.height,"to_x":x, "to_y":y, "target_stack": target_stack});
+            var bullet = bullet_component.createObject(view,{"x":oppressor.x  - oppressor.width / 2, "y":oppressor.y - oppressor.height,"from_x":oppressor.x - oppressor.width / 2,"from_y":oppressor.y - oppressor.height,"to_x":x, "to_y":y, "target_stack": target_stack});
 //            oppressor.x()
 //            tanks.push(tank)
 //            tank.start()
             console.log("create_bullet",bullet_component, bullet,oppressor,oppressor.x, oppressor.y,oppressor.Center,oppressor.horizontalCenter, x,y);
+            bullet.rotationChanged.connect(changed_rotation)
 
         } else {
             console.log(bullet_component, "errString",bullet_component.errorString());
@@ -339,7 +377,9 @@ Window {
         if (!component)
             component = Qt.createComponent("Tank.qml");
         if (component.status == Component.Ready) {
-            var x = Math.random() * 100 * 6
+            var x = Math.random() * root.width - 100
+            if (x <= 0) x += Math.random()* 100
+//            width
             var y = 10 * i
             var word = random_word()
 //            if (i == 1) word = "café"
