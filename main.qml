@@ -159,12 +159,15 @@ Window {
             onTriggered: {
 //              grid.x = grid.x - 1
               grid.y = grid.y + 1
+                grid.opacity = 0.3
               count += 1
                 if (count >= 100){
                     count = 0
 //                    grid.x = 0
                     grid.y = -height
+                    grid.opacity = 0.2
                 }
+
             }
         }
         Oppressor {

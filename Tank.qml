@@ -8,7 +8,7 @@ Rectangle {
     id: tank
 
 //    color: Qt.rgba(Math.random(),Math.random(),Math.random(),Math.random())
-    color: current ? "#132B2B" : 'transparent'
+    color: current ? "#132B2B" : 'black' //transparent
 //    opacity: 0.8
     width: text.width + 10
     height: text.height + 2
