@@ -11,5 +11,10 @@
         <file>ztype/grid.png</file>
         <file>ztype/plasma.png</file>
         <file>ztype/oppressor.png</file>
+        <file>ztype/bullet.png</file>
+        <file>ztype/destroyer.png</file>
+        <file>ztype/mine.png</file>
+        <file>ztype/missle.png</file>
+        <file>ztype.js</file>
     </qresource>
 </RCC>

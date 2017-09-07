@@ -4,14 +4,16 @@ Rectangle {
     property string word: ""
     property string visible_word: ""
     property bool current: false
+    property double image_x: iamge.x
+    property double image_y: iamge.y
 
     id: tank
 
 //    color: Qt.rgba(Math.random(),Math.random(),Math.random(),Math.random())
     color: current ? "#132B2B" : 'black' //transparent
 //    opacity: 0.8
-    width: text.width + 10
-    height: text.height + 2
+    width: text.width +16
+    height: 16//text.height + 10
     Component.onCompleted: {
 
 
@@ -30,7 +32,7 @@ Rectangle {
     }
     function custom_destroy() {
         timer.stop()
-//        visible = false
+        tank.visible = false
 //        destroy()
         destroy_timer.start()
     }
@@ -51,10 +53,19 @@ Rectangle {
         anchors.centerIn: parent
     }
 
-//    Image {
-//        id: iamge
-//        source: ""
-//    }
+    Image {
+        id: iamge
+        width: 32
+        height: 32
+        anchors.left: text.right
+//        anchors.right: parent.right
+        x: -32
+//        anchors.bottom: parent.bottom
+//        anchors.horizontalCenter: parent.horizontalCenter
+        source: "qrc:/ztype/mine.png"
+        fillMode: Image.Stretch
+
+    }
 //    Component.onCompleted:
     Timer {
         id:timer
@@ -63,15 +74,16 @@ Rectangle {
         onTriggered: {
             x += (Math.random() * 100 - 50) / 100
 //            if (x > parent.width) x -= 5
-            if (x < 0) x +=5
+            if (x < 0) x +=2
 
-            y += Math.random() * 2
+            y += Math.random()
+            iamge.rotation += 10
 
         }
     }
     Timer {
         id: destroy_timer
-        interval: 1000
+        interval: 200
         onTriggered: {
             tank.destroy()
             console.log("destroy")

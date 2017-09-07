@@ -97,8 +97,9 @@ Item {
                if (target_stack) {
                    var a_x = root.x
                    var a_y = root.y
-                   var b_x = target_stack.x
+                   var b_x = target_stack.image_x + target_stack.x - 32
                    var b_y = target_stack.y
+//                   console.log('target tank', target_stack.x, target_stack.y, target_stack.image_x, target_stack.image_y)
 
                    var distance_x = Math.abs(a_x - b_x)
                    var distance_y = Math.abs(a_y - b_y)

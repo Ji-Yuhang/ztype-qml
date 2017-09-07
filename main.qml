@@ -2,6 +2,8 @@ import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtMultimedia 5.5
 import an.qt.PlayerHelper 1.0
+import "qrc:/ztype.js" as Ztype
+
 Window {
     id: root
 
@@ -23,49 +25,6 @@ Window {
     width: 460//640
     height: 720//480
     title: qsTr("Ztype-qml by Ji-Yuhang")
-    function random_word() {
-        var tanks_words_first_letters = null
-        if (tanks.length != 0 ) tanks.map(function(t){return t.word[0];})
-        else tanks_words_first_letters = []
-        console.log("tanks_words_first_letters:", tanks_words_first_letters)
-
-        var dead = true
-        while (dead) {
-
-            var i = Math.floor(Math.random() * words.length - 1)
-            var word = words[i]
-
-            var trues = tanks_words_first_letters && tanks_words_first_letters.length != 0 ? tanks_words_first_letters.map(function(letter){
-                if (letter === word[0])
-                    return false
-                else
-                    return true
-            }) : []
-
-            var can = true
-            for (var j = 0; j< trues.length; j++) {
-                if(trues[j] == true) {
-                    can = true
-
-
-                } else {
-                    can = false
-                    break
-                }
-            }
-            if (can) {
-                dead = false
-            }
-        }
-
-
-
-        words[i] = words[0]
-        words.shift()
-        console.log(i,word,words.length)
-
-        return word
-    }
 
     Component.onCompleted: {
         var request = new XMLHttpRequest
@@ -110,18 +69,6 @@ Window {
     }
 
 
-    function key_error(key, str) {
-        console.log("key_error",key, str)
-    }
-    function get_tanks_words() {
-        return tanks.map(function(t){return t.word;});
-    }
-    function get_tanks_words_first_letters() {
-        var tanks_words_first_letters = null
-        if (tanks.length != 0 ) tanks_words_first_letters = tanks.map(function(t){return t.word[0];})
-        else tanks_words_first_letters = []
-        return tanks_words_first_letters
-    }
 
 
 
@@ -161,13 +108,13 @@ Window {
             onTriggered: {
 //              grid.x = grid.x - 1
               grid.y = grid.y + 1
-                grid.opacity = 0.3
+              grid.opacity -= 0.002
               count += 1
                 if (count >= 100){
                     count = 0
 //                    grid.x = 0
                     grid.y = -view.height
-                    grid.opacity = 0.2
+                    grid.opacity = 0.3
                 }
 
             }
@@ -204,8 +151,8 @@ Window {
                 return
             }
 
-            var tanks_words = get_tanks_words()
-            var tanks_words_first_letters = get_tanks_words_first_letters()
+            var tanks_words = Ztype.get_tanks_words(tanks)
+            var tanks_words_first_letters = Ztype.get_tanks_words_first_letters(tanks)
             var lower_case_letter = String.fromCharCode(key).toLowerCase()
 //            console.log("[tanks_words,tanks_words_first_letters,lower_case_letter]",tanks_words,tanks_words_first_letters,lower_case_letter)
 
@@ -235,7 +182,7 @@ Window {
                     one_letter_of_word_callback()
                 } else {
                     // 匹配失败
-                    key_error(lower_case_letter, "按键出错")
+                    Ztype.key_error(lower_case_letter, "按键出错")
                 }
 
             }
@@ -263,7 +210,7 @@ Window {
 //                                console.log("lock_tank_ mapToItem: ",x,y,point,point.x,point.y)
 
 //                                lock_animation(point.x,point.y)
-                                lock_animation(x,y)
+                                lock_animation(x + target_stack.width,y)
                             }
                             lock_tank(target_stack)
 
@@ -272,7 +219,9 @@ Window {
                                 temp += target_stack.visible_word[i]
                             }
 
+                            var temp_right = target_stack.width
                             target_stack.visible_word = temp
+                            target_stack.x += temp_right -target_stack.width
                             // 播放子弹声音
 //                            bullet_audio.stop()
 //                            bullet_audio.seek(0.3)
@@ -285,10 +234,10 @@ Window {
 
 
                         } else {
-                            //                        key_error(lower_case_letter, "按键出错")
+                            //                        Ztype.key_error(lower_case_letter, "按键出错")
                         }
                     }
-                    //                key_error(lower_case_letter, "按键出错")
+                    //                Ztype.key_error(lower_case_letter, "按键出错")
 
                     //                if (letter === lower_case_letter) {
                     //                    stack.push(key)
@@ -339,7 +288,10 @@ Window {
                             temp += target_stack.visible_word[i]
                         }
 
+                        var temp_right = target_stack.width
                         target_stack.visible_word = temp
+                        target_stack.x += temp_right -target_stack.width
+                        console.log('temp_right', temp_right, target_stack.x, target_stack.width)
                     }
                     // 播放子弹声音
 
@@ -350,7 +302,7 @@ Window {
                     play_bullet_audio()
 
                 } else {
-                    key_error(lower_case_letter, "按键出错")
+                    Ztype.key_error(lower_case_letter, "按键出错")
                 }
 
             }
@@ -368,7 +320,7 @@ Window {
         if (bullet_component.status == Component.Ready) {
 //            var x = Math.random() * 100 * 6
 //            var y = 10 * i
-//            var word = random_word()
+//            var word = Ztype.random_word(tanks,words)
             var bullet = bullet_component.createObject(view,{"x":oppressor.x  - oppressor.width / 2, "y":oppressor.y - oppressor.height,"from_x":oppressor.x - oppressor.width / 2,"from_y":oppressor.y - oppressor.height,"to_x":x, "to_y":y, "target_stack": target_stack});
 //            oppressor.x()
 //            tanks.push(tank)
@@ -392,8 +344,8 @@ Window {
             var x = Math.random() * root.width - 100
             if (x <= 0) x += Math.random()* 100
 //            width
-            var y = 10 * i
-            var word = random_word()
+            var y = 20 * i
+            var word = Ztype.random_word(tanks,words)
 //            if (i == 1) word = "café"
             var tank = component.createObject(view,{"x":x, "y":y, word: word, visible_word: word });
             tanks.push(tank)
@@ -415,7 +367,7 @@ Window {
         if (lock_component.status == Component.Ready) {
 //            var x = Math.random() * 100 * 6
 //            var y = 10 * i
-//            var word = random_word()
+//            var word = Ztype.random_word(tanks,words)
             var lock = lock_component.createObject(view,{"x":x, "y":y });
 //            tanks.push(tank)
 //            tank.start()
@@ -431,8 +383,8 @@ Window {
     }
     function play_bullet_audio(){
         console.log("play_bullet_audio");
-//        player_helper.play("/home/jipai/git/ztype-qml/ztype/plasma.mp3");
-        player_helper.play("ztype/plasma.mp3");
+        player_helper.play("/home/jipai/git/ztype-qml/ztype/plasma.mp3");
+//        player_helper.play("ztype/plasma.mp3");
 
         console.log("player_helper");
 
