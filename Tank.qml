@@ -9,6 +9,7 @@ Rectangle {
 
     id: tank
 
+
 //    color: Qt.rgba(Math.random(),Math.random(),Math.random(),Math.random())
     color: current ? "#132B2B" : 'black' //transparent
 //    opacity: 0.8
@@ -18,6 +19,13 @@ Rectangle {
 
 
     }
+    signal word_destroy(string word)
+//    Component.onDestroyed: {
+//        word_destroy(word)
+
+//    }
+
+
     onCurrentChanged: {
         z = 2
 
@@ -33,6 +41,8 @@ Rectangle {
     function custom_destroy() {
         timer.stop()
         tank.visible = false
+        tank.word_destroy(word)
+
 //        destroy()
         destroy_timer.start()
     }
@@ -85,6 +95,8 @@ Rectangle {
         id: destroy_timer
         interval: 200
         onTriggered: {
+            tank.word_destroy(word)
+
             tank.destroy()
             console.log("destroy")
 //            Shanbay.shanbay(word, function(data){

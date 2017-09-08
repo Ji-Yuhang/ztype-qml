@@ -11,6 +11,7 @@ class PlayerHelper : public QQuickItem
 public:
     explicit PlayerHelper(QQuickItem *parent = 0);
     Q_INVOKABLE void play(const QString& mp3_path);
+    Q_INVOKABLE bool exists(const QString& file_path);
 
     QMediaPlayer* player ;
 signals:

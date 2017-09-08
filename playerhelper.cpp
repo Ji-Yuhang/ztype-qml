@@ -4,10 +4,15 @@
 #include <QDebug>
 #include <QDir>
 #include <QFile>
+#include <QFileInfo>
 PlayerHelper::PlayerHelper(QQuickItem *parent) : QQuickItem(parent)
 {
     player = new QMediaPlayer;
 
+}
+bool  PlayerHelper::exists(const QString& file_path)
+{
+    return QFileInfo::exists(file_path);
 }
 
 void PlayerHelper::play(const QString &mp3_path)

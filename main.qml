@@ -2,22 +2,37 @@ import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtMultimedia 5.5
 import an.qt.PlayerHelper 1.0
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Styles 1.4
 import "qrc:/ztype.js" as Ztype
+import "qrc:/lodash_qml.js" as Lodash
 
 Window {
     id: root
+
+//    property alias shout_scene_root: shout_scene.root
+//    property alias listen_scene_root: listen_scene.root
+
 
     property Component component: null
 
     property Component lock_component: null
     property Component bullet_component: null
 
+    property var current_scene: null
+
+
     property var words: []
+    property var destroy_words: []
+    property var level_words: []
+
+    property var start_time: null
 
     property var tanks: []
     property var stack: []
     property var target_stack: null
     property var last_buller_audio: null
+    property var level: 0
 
     modality: Qt.WindowModal
 
@@ -27,288 +42,169 @@ Window {
     title: qsTr("Ztype-qml by Ji-Yuhang")
 
     Component.onCompleted: {
-        var request = new XMLHttpRequest
-        request.open("GET","qrc:/collins_1_list_1.txt")
-//         request.open("GET","https://iamyuhang.com/api/v1/words/learnings/?token=")
-
-        request.onreadystatechange = function() {
-            if (request.readyState == XMLHttpRequest.DONE) {
-                var doc = request.responseText;
-
-//                var json = JSON.parse(doc)
-//                words = json.data.learnings.map(function(learn){return learn.word})
-                words = doc.split("\n").map(function(w){return w.replace("\r\n",'').replace("\r",'');})
-                console.log("read: " + words.length)
-
-            }
-        }
-        request.send()
-
-//        console.log("seekable",bullet_audio.seekable)
-//        console.log(mediaplayer, mediaplayer.availability, mediaplayer.status)
-//        playSound.play()
-//        player_helper.play("/home/jipai/git/ztype-qml/ztype/endure.ogg")
-
+        console.log(JSON.stringify(Lodash._.chunk(["a", "b", "c", "d"], 2)));
+        Ztype.init_words(root)
+//        shout_scene_root = root
+//        listen_scene_root = root
     }
     PlayerHelper {
         id: player_helper
     }
 
-    MouseArea {
-        id:area
+
+    ShoutScene {
+        id: shout_scene
+        z: 5
+        color: 'transparent' //transparent
+        root: root
+        visible: false
         anchors.fill: parent
-        onClicked: {
-//            mediaplayer.play()
-
-            timer.start()
-//            console.log("mediaplaye error:",mediaplayer.errorString)
-//            redalert_audio.play()
-//            playSound.play()
+        focus: false
+        Component.onCompleted: {
+//            shout_scene_root = root
         }
+    }
+    ListenScene {
+        z: 5
+        id: listen_scene
+//        root: root
 
+        visible: false
+        focus: false
+
+        anchors.fill: parent
+        Component.onCompleted: {
+//            listen_scene_root = root
+        }
     }
 
+    Column {
+        id: column_buttons
+        z: 4
+        anchors.centerIn: parent
+        spacing: 2
 
+        Button {
+            id: shout_button
+            text: "射击模式"
+            background: Rectangle {
+                      implicitWidth: 100
+                      implicitHeight: 40
+                      opacity: enabled ? 1 : 0.3
+                      border.color: shout_button.down ? "#17a81a" : "#21be2b"
+                      border.width: 1
+                      radius: 2
+                      color: '#132B2B'
 
+                  }
+            contentItem: Text {
+                      text: shout_button.text
+                      font: shout_button.font
+                      opacity: enabled ? 1.0 : 0.3
+                      color: shout_button.down ? "#132B2B" : "#21be2b"
+                      horizontalAlignment: Text.AlignHCenter
+                      verticalAlignment: Text.AlignVCenter
+                      elide: Text.ElideRight
+                  }
+                onClicked: {
+                    column_buttons.visible = false
+                    shout_scene.visible = true
+                    shout_scene.focus = true
 
+                    listen_scene.visible = false
+                    current_scene = shout_scene
+                }
+        }
+        Button {
+            id: listen_button
 
-    Rectangle {
-        id: view
-        color: "black"
+            text: "听力模式"
+            background: Rectangle {
+                      implicitWidth: 100
+                      implicitHeight: 40
+                      opacity: enabled ? 1 : 0.3
+                      border.color: listen_button.down ? "#17a81a" : "#21be2b"
+                      border.width: 1
+                      radius: 2
+                      color: '#132B2B'
+
+                  }
+            contentItem: Text {
+                      text: listen_button.text
+                      font: listen_button.font
+                      opacity: enabled ? 1.0 : 0.3
+                      color: listen_button.down ? "#132B2B" : "#21be2b"
+                      horizontalAlignment: Text.AlignHCenter
+                      verticalAlignment: Text.AlignVCenter
+                      elide: Text.ElideRight
+                  }
+            onClicked: {
+                column_buttons.visible = false
+                shout_scene.visible = false
+                listen_scene.visible = true
+                listen_scene.focus = true
+
+                current_scene = listen_scene
+
+            }
+        }
+    }
+
+    Image {
         anchors.fill: parent
-        focus: true
-        Image {
-            anchors.fill: parent
-            id: back
-            z: 0
+        id: back
+        z: 0
 //            source: "file:///home/jipai/git/ztype-qml/ztype/gradient.png"
-            source: "qrc:/ztype/gradient.png"
+        source: "qrc:/ztype/gradient.png"
 //            fillMode: Image.Tile
-        }
-        Image {
+    }
+    Image {
 //            anchors.fill: parent
-            id: grid
-            width: parent.width * 3 + 100
-            height: parent.height * 3 + 100
-            opacity: 0.3
-            z: 1
+        id: grid
+        width: parent.width * 3 + 100
+        height: parent.height * 3 + 100
+        opacity: 0.3
+        z: 1
 //            source: "file:///home/jipai/git/ztype-qml/ztype/grid.png"
+        source: "qrc:/ztype/grid.png"
+        fillMode: Image.Tile
+    }
 
-            source: "qrc:/ztype/grid.png"
-            fillMode: Image.Tile
-        }
+    Timer {
+        id: grid_timer
+        property int count: 0
+        interval: 100
+        running: true;
+        repeat: true
 
-        Timer {
-            id: grid_timer
-            property int count: 0
-            interval: 100
-            running: true;
-            repeat: true
-
-            onTriggered: {
-//              grid.x = grid.x - 1
-              grid.y = grid.y + 1
-              grid.opacity -= 0.002
-              count += 1
-                if (count >= 100){
-                    count = 0
-//                    grid.x = 0
-                    grid.y = -view.height
-                    grid.opacity = 0.3
-                }
-
+        onTriggered: {
+            //              grid.x = grid.x - 1
+            grid.y = grid.y + 1
+            grid.opacity -= 0.002
+            count += 1
+            if (count >= 100){
+                count = 0
+                //                    grid.x = 0
+//                var diff_y =
+                grid.y = current_scene ? -current_scene.height: root.height
+                grid.opacity = 0.3
             }
-        }
-        Oppressor {
-            id: oppressor
-            width: 50
-            height: 50
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
+            if (root.start_time){
+                var current = Date.now()
+                var diff = current - root.start_time
+                var sec = parseInt(diff / 1000)
+                var min = parseInt(sec / 60)
+                sec = parseInt(sec % 60)
 
-        }
-
-//        Canvas {
-//            anchors.fill: parent
-//            onPaint: {
-//                var ctx = getContext("2d")
-
-//            }
-//        }
-
-        Keys.enabled: true
-        Keys.onPressed: {
-            var key = event.key
-            console.log("key pressed",key)
-            event.accepted = true;
-
-            if (key == Qt.Key_Enter || key == Qt.Key_Return){
-                console.log('KeyEnter')
-                create_tank(0)
-                create_tank(1)
-                create_tank(2)
-                create_tank(3)
-                return
+                start_time_text.text = min.toString() + '\''+ sec.toString() + '\'\''
             }
 
-            var tanks_words = Ztype.get_tanks_words(tanks)
-            var tanks_words_first_letters = Ztype.get_tanks_words_first_letters(tanks)
-            var lower_case_letter = String.fromCharCode(key).toLowerCase()
-//            console.log("[tanks_words,tanks_words_first_letters,lower_case_letter]",tanks_words,tanks_words_first_letters,lower_case_letter)
-
-            if (stack.length ==0) {
-                function one_word_finish_callback() {
-
-                }
-                // 栈中的单词已经全部输入正确，销毁之
-                one_word_finish_callback()
-
-                function push_other_word() {
-
-                }
-                // 继续入栈其他的单词
-                push_other_word()
-            } else {
-                // 当前栈中已经有单词
-
-            }
-            function match_stack(lower_case_letter) {
-                var stack_rear = stack[0]
-                if (lower_case_letter == stack_rear) {
-                    // 匹配成功
-                    function one_letter_of_word_callback() {
-
-                    }
-                    one_letter_of_word_callback()
-                } else {
-                    // 匹配失败
-                    Ztype.key_error(lower_case_letter, "按键出错")
-                }
-
-            }
-            match_stack(lower_case_letter)
-
-            if(stack.length == 0) {
-                for (var i = 0; i < tanks_words_first_letters.length; i++) {
-                    //                String.fromCharCode(65).toLowerCase()
-                    var letter = null
-                    if (stack.length == 0 && tanks_words_first_letters[i]) {
-                        letter = tanks_words_first_letters[i].toLowerCase()
-                        if (letter === lower_case_letter) {
-                            for (var j = 1; j < tanks_words[i].length; j++) {
-                                stack.push(tanks_words[i][j])
-                            }
-                            target_stack = tanks[i]
-                            target_stack.current = true
 
 
-
-                            function lock_tank(target_stack) {
-                                var x = target_stack.x
-                                var y =target_stack.y
-//                                var point = target_stack.mapToItem(root,0,0)
-//                                console.log("lock_tank_ mapToItem: ",x,y,point,point.x,point.y)
-
-//                                lock_animation(point.x,point.y)
-                                lock_animation(x + target_stack.width,y)
-                            }
-                            lock_tank(target_stack)
-
-                            var temp = ""
-                            for (var i = 1; i < target_stack.visible_word.length; i++) {
-                                temp += target_stack.visible_word[i]
-                            }
-
-                            var temp_right = target_stack.width
-                            target_stack.visible_word = temp
-                            target_stack.x += temp_right -target_stack.width
-                            // 播放子弹声音
-//                            bullet_audio.stop()
-//                            bullet_audio.seek(0.3)
-//                            bullet_audio.play()
-//                            component
-                            play_bullet_audio()
-                            player_helper.play("http://media.shanbay.com/audio/uk/"+target_stack.word+".mp3");
-
-                            create_bullet(target_stack, target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
-
-
-                        } else {
-                            //                        Ztype.key_error(lower_case_letter, "按键出错")
-                        }
-                    }
-                    //                Ztype.key_error(lower_case_letter, "按键出错")
-
-                    //                if (letter === lower_case_letter) {
-                    //                    stack.push(key)
-                    //                    console.log("Good, You catch it:", key, letter,stack)
-
-                    //                } else {
-                    //                    console.log("Error, You lose it:", key, letter)
-
-                    //                }
-                }
-            }
-            else if(stack.length != 0) {
-                letter = stack[0].toLowerCase()
-                if(letter == 'é') letter = 'e'
-                if (letter == lower_case_letter) {
-                    stack.shift()
-                    if (stack.length == 0) {
-
-
-                        var index = null
-                        for (var i = 0; i < tanks.length; i++) {
-                            if(tanks[i] == target_stack) {
-                                index = i
-                            }
-                        }
-//                        console.log("stack empty!!!", index)
-
-
-                            target_stack.visible_word = ""
-                            target_stack.custom_destroy()
-                        player_helper.play("http://media.shanbay.com/audio/uk/"+target_stack.word+".mp3");
-
-
-                            target_stack = null
-                        if (index != null){
-//                            console.log("will shift tanks ",index,tanks, tanks.length)
-                            tanks[index] = tanks[0]
-                            tanks.shift()
-//                            console.log("did shift tanks ",index,tanks, tanks.length)
-                        }
-
-
-//                        target_stack = null
-//                        target_stack
-                    } else {
-                        var temp = ""
-                        for (var i = 1; i < target_stack.visible_word.length; i++) {
-                            temp += target_stack.visible_word[i]
-                        }
-
-                        var temp_right = target_stack.width
-                        target_stack.visible_word = temp
-                        target_stack.x += temp_right -target_stack.width
-                        console.log('temp_right', temp_right, target_stack.x, target_stack.width)
-                    }
-                    // 播放子弹声音
-
-//                    bullet_audio.stop()
-//                    bullet_audio.seek(0.3)
-//                    bullet_audio.play()
-                    create_bullet(target_stack, target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
-                    play_bullet_audio()
-
-                } else {
-                    Ztype.key_error(lower_case_letter, "按键出错")
-                }
-
-            }
-            console.log("stack",stack)
         }
     }
+
+
     function changed_rotation(ro){
         oppressor.rotation = ro
 
@@ -337,29 +233,13 @@ Window {
 
     }
 
-    function create_tank(i) {
-        if (!component)
-            component = Qt.createComponent("Tank.qml");
-        if (component.status == Component.Ready) {
-            var x = Math.random() * root.width - 100
-            if (x <= 0) x += Math.random()* 100
-//            width
-            var y = 20 * i
-            var word = Ztype.random_word(tanks,words)
-//            if (i == 1) word = "café"
-            var tank = component.createObject(view,{"x":x, "y":y, word: word, visible_word: word });
-            tanks.push(tank)
-            tank.start()
-            console.log(component, tank, x,y, word);
-
-        } else {
-            console.log(component, "errString",component.errorString());
-
-        }
-
-//        console.log(component, "onTriggered",component.status);
-
+    function update_score(word){
+        if (destroy_words.indexOf(word) == -1 ) destroy_words.push(word)
+        score.text = destroy_words.length.toString() +' / '+ words.length.toString()
+        score.update()
+        console.log('update_score',word,score.text)
     }
+
     function lock_animation(x,y) {
 
         if (!lock_component)
@@ -372,6 +252,7 @@ Window {
 //            tanks.push(tank)
 //            tank.start()
             console.log(lock_component, lock, x,y);
+            if (!root.start_time) root.start_time = Date.now()
 
         } else {
             console.log(lock_component, "errString",component.errorString());
@@ -415,20 +296,7 @@ Window {
     }
 
 
-    Timer {
-        id: timer
-        interval: 100
-        onTriggered: {
-            create_tank(0)
-            create_tank(1)
-            create_tank(2)
-            create_tank(3)
-//            create_tank()
-//            create_tank()
-//            create_tank()
 
-        }
-    }
     Audio {
         id: mediaplayer
         autoLoad: true
