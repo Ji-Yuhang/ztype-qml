@@ -34,9 +34,19 @@ void PlayerHelper::play(const QString &mp3_path)
 //    bool s = QProcess::startDetached(command);
 //    qDebug() << "play" << command << s;
 #else
+
+#define TEST_QMediaPlayer
+#ifdef TEST_QMediaPlayer
+        player->setMedia(QUrl::fromLocalFile(path));
+        player->setVolume(50);
+        player->play();
+
+#else
     QString command = QString("/usr/bin/mplayer -really-quiet %1").arg(mp3_path);
     bool s = QProcess::startDetached(command);
     qDebug() << "play" << mp3_path << s;
+#endif
+
 
 #endif
 
