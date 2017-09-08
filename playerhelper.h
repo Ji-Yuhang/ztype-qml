@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QMediaPlayer>
-
+#include <QList>
 class PlayerHelper : public QQuickItem
 {
     Q_OBJECT
@@ -13,7 +13,8 @@ public:
     Q_INVOKABLE void play(const QString& mp3_path);
     Q_INVOKABLE bool exists(const QString& file_path);
 
-    QMediaPlayer* player ;
+    QList<QMediaPlayer*> players_;
+//    QMediaPlayer* player ;
 signals:
 
 public slots:

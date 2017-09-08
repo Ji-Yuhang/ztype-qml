@@ -17,7 +17,7 @@ Rectangle {
         property var stack: []
         property var target_stack: null
         property var last_buller_audio: null
-        property var level: 0
+        property int level: 0
 
         Component.onCompleted: {
             console.log('ShoutScene.onCompleted',root)
@@ -47,20 +47,43 @@ Rectangle {
             interval: 100
             onTriggered: {
 //                (root,tanks,words, view, i)
-                Ztype.create_tank(root,root.tanks, root.words, view, 0)
-                Ztype.create_tank(root,root.tanks, root.words, view, 1)
-                Ztype.create_tank(root,root.tanks, root.words, view, 2)
-                Ztype.create_tank(root,root.tanks, root.words, view, 3)
-                if (root.level > 4) {
-                    root.level = 1
-                    root.level_words = []
-                } else {
-                    root.level = root.level + 1
+                var level = 0
+                var words = root.words.slice(0,4)
+                Ztype.create_n_tanks(view, words, level)
+//                Ztype.create_tank(root,root.tanks, root.words, view, 0)
+//                Ztype.create_tank(root,root.tanks, root.words, view, 1)
+//                Ztype.create_tank(root,root.tanks, root.words, view, 2)
+//                Ztype.create_tank(root,root.tanks, root.words, view, 3)
+//                if (root.level > 4) {
+//                    root.level = 1
+//                    root.level_words = []
+//                } else {
+//                    root.level = root.level + 1
 
-                }
+//                }
 
             }
         }
+        Timer {
+            id: scene_timer
+            property int count: 0
+            interval: 500
+            running: true;
+            repeat: true
+
+            onTriggered: {
+                if (view.start_time){
+                    var current = Date.now()
+                    var diff = current - view.start_time
+                    var sec = parseInt(diff / 1000)
+                    var min = parseInt(sec / 60)
+                    sec = parseInt(sec % 60)
+
+                    start_time_text.text = min.toString() + '\''+ sec.toString() + '\'\''
+                }
+            }
+        }
+
         Text {
             id: score
             z: 3
@@ -219,7 +242,7 @@ Rectangle {
                             }
 
 
-                            create_bullet(target_stack, target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
+                            Ztype.create_bullet(view, oppressor, target_stack, target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
 
 
                         } else {
@@ -293,7 +316,7 @@ Rectangle {
 //                    bullet_audio.stop()
 //                    bullet_audio.seek(0.3)
 //                    bullet_audio.play()
-                    create_bullet(target_stack, target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
+                    Ztype.create_bullet(view, oppressor,target_stack, target_stack?target_stack.x :50 ,target_stack?target_stack.y:50)
                     play_bullet_audio()
 
                 } else {

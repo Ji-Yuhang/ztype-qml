@@ -16,7 +16,7 @@ Rectangle {
     width: text.width +16
     height: 16//text.height + 10
     Component.onCompleted: {
-
+        timer.start();
 
     }
     signal word_destroy(string word)
@@ -35,9 +35,9 @@ Rectangle {
 
     }
 
-    function start() {
-        timer.start();
-    }
+//    function start() {
+//        timer.start();
+//    }
     function custom_destroy() {
         timer.stop()
         tank.visible = false
@@ -84,7 +84,7 @@ Rectangle {
         onTriggered: {
             x += (Math.random() * 100 - 50) / 100
 //            if (x > parent.width) x -= 5
-            if (x < 0) x +=2
+            if (x < 0) x += 4
 
             y += Math.random()
             iamge.rotation += 10

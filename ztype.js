@@ -1,6 +1,7 @@
 var status = Qt.include("qrc:/lodash_js.js")
 console.log('include status', status.status)
 
+
 function func() {
 
 }
@@ -112,36 +113,102 @@ function confuse_word(word, level){
 
     return temp
 }
-function create_tank(root,tanks,words, view,i) {
-    if (!component)
-        component = Qt.createComponent("Tank.qml");
+
+function create_n_tanks(parent_view, words, level) {
+    if (!component) component = Qt.createComponent("Tank.qml");
     if (component.status == Component.Ready) {
-        var x = Math.random() * root.width - 100
-        if (x <= 0) x += Math.random()* 100
-//            width
-        var y = 20 * i
-        var word = ''
-        if (root.level >= 0) {
-             word = random_word(tanks,words)
-             root.level_words.push(word)
-        } else {
-            word = root.level_words.shift()
-        }
+        var new_tanks = _.map(words, function(word, i) {
+            console.log('forEach:',word)
+            var x = Math.random() * parent_view.width - 100
+            if (x <= 0) x += Math.random()* 100
+            var y = 20 * i
 
-//            if (i == 1) word = "café"
-        var tank = component.createObject(view,{"x":x, "y":y, word: word, visible_word: confuse_word(word, root.level) });
-//            tank. connect()
-        tank.word_destroy.connect(update_score)
 
-        tanks.push(tank)
-        tank.start()
-        console.log(component, tank, x,y, word);
+            // if (i == 1) word = "café"
+            var tank = component.createObject( parent_view, {
+                                                  "x": x,
+                                                  "y": y,
+                                                  word: word,
+                                                  visible_word: confuse_word(word, level)
+                                              });
+//            tank.word_destroy.connect(update_score)
+//            tank.start()
+            console.log(component, tank, x,y, word);
+            return tank
+        })
+
+        parent_view.tanks = _.concat(parent_view.tanks, new_tanks)
+
 
     } else {
-        console.log(component, "errString",component.errorString());
+        console.error(component, "errString", component.errorString());
+    }
+}
+
+
+//function update_score(word){
+//    if (destroy_words.indexOf(word) == -1 ) destroy_words.push(word)
+//    score.text = destroy_words.length.toString() +' / '+ words.length.toString()
+//    score.update()
+//    console.log('update_score',word,score.text)
+//}
+
+//function create_tank(root,tanks,words, view,i) {
+//    if (!component)
+//        component = Qt.createComponent("Tank.qml");
+//    if (component.status == Component.Ready) {
+//        var x = Math.random() * root.width - 100
+//        if (x <= 0) x += Math.random()* 100
+////            width
+//        var y = 20 * i
+//        var word = ''
+//        if (root.level >= 0) {
+//             word = random_word(tanks,words)
+//             root.level_words.push(word)
+//        } else {
+//            word = root.level_words.shift()
+//        }
+
+////            if (i == 1) word = "café"
+//        var tank = component.createObject(view,{"x":x, "y":y, word: word, visible_word: confuse_word(word, root.level) });
+////        tank.word_destroy.connect(update_score)
+
+//        tanks.push(tank)
+//        tank.start()
+//        console.log(component, tank, x,y, word);
+
+//    } else {
+//        console.log(component, "errString",component.errorString());
+
+//    }
+
+////        console.log(component, "onTriggered",component.status);
+
+//}
+
+function create_bullet(parent_view, oppressor, target_stack,x,y){
+    if (!bullet_component)
+        bullet_component = Qt.createComponent("Bullet.qml");
+    if (bullet_component.status == Component.Ready) {
+//            var x = Math.random() * 100 * 6
+//            var y = 10 * i
+//            var word = Ztype.random_word(tanks,words)
+        var bullet = bullet_component.createObject(parent_view,{"x":oppressor.x  - oppressor.width / 2, "y":oppressor.y - oppressor.height,"from_x":oppressor.x - oppressor.width / 2,"from_y":oppressor.y - oppressor.height,"to_x":x, "to_y":y, "target_stack": target_stack});
+//            oppressor.x()
+//            tanks.push(tank)
+//            tank.start()
+        console.log("create_bullet",bullet_component, bullet,oppressor,oppressor.x, oppressor.y,oppressor.Center,oppressor.horizontalCenter, x,y);
+//        bullet.rotationChanged.connect(changed_rotation)
+
+    } else {
+        console.log(bullet_component, "errString",bullet_component.errorString());
 
     }
 
-//        console.log(component, "onTriggered",component.status);
+    console.log(bullet_component, "bullet onTriggered",bullet_component.status);
+
+}
+function changed_rotation(ro){
+    oppressor.rotation = ro
 
 }

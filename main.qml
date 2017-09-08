@@ -189,15 +189,6 @@ Window {
                 grid.y = current_scene ? -current_scene.height: root.height
                 grid.opacity = 0.3
             }
-            if (root.start_time){
-                var current = Date.now()
-                var diff = current - root.start_time
-                var sec = parseInt(diff / 1000)
-                var min = parseInt(sec / 60)
-                sec = parseInt(sec % 60)
-
-                start_time_text.text = min.toString() + '\''+ sec.toString() + '\'\''
-            }
 
 
 
@@ -205,40 +196,10 @@ Window {
     }
 
 
-    function changed_rotation(ro){
-        oppressor.rotation = ro
 
-    }
 
-    function create_bullet(target_stack,x,y){
-        if (!bullet_component)
-            bullet_component = Qt.createComponent("Bullet.qml");
-        if (bullet_component.status == Component.Ready) {
-//            var x = Math.random() * 100 * 6
-//            var y = 10 * i
-//            var word = Ztype.random_word(tanks,words)
-            var bullet = bullet_component.createObject(view,{"x":oppressor.x  - oppressor.width / 2, "y":oppressor.y - oppressor.height,"from_x":oppressor.x - oppressor.width / 2,"from_y":oppressor.y - oppressor.height,"to_x":x, "to_y":y, "target_stack": target_stack});
-//            oppressor.x()
-//            tanks.push(tank)
-//            tank.start()
-            console.log("create_bullet",bullet_component, bullet,oppressor,oppressor.x, oppressor.y,oppressor.Center,oppressor.horizontalCenter, x,y);
-            bullet.rotationChanged.connect(changed_rotation)
 
-        } else {
-            console.log(bullet_component, "errString",bullet_component.errorString());
 
-        }
-
-        console.log(bullet_component, "bullet onTriggered",bullet_component.status);
-
-    }
-
-    function update_score(word){
-        if (destroy_words.indexOf(word) == -1 ) destroy_words.push(word)
-        score.text = destroy_words.length.toString() +' / '+ words.length.toString()
-        score.update()
-        console.log('update_score',word,score.text)
-    }
 
     function lock_animation(x,y) {
 
@@ -248,7 +209,7 @@ Window {
 //            var x = Math.random() * 100 * 6
 //            var y = 10 * i
 //            var word = Ztype.random_word(tanks,words)
-            var lock = lock_component.createObject(view,{"x":x, "y":y });
+            var lock = lock_component.createObject(current_scene,{"x":x, "y":y });
 //            tanks.push(tank)
 //            tank.start()
             console.log(lock_component, lock, x,y);
@@ -264,7 +225,9 @@ Window {
     }
     function play_bullet_audio(){
         console.log("play_bullet_audio");
-        player_helper.play("/home/jipai/git/ztype-qml/ztype/plasma.mp3");
+//        player_helper.play("/home/jipai/git/ztype-qml/ztype/plasma.mp3");
+//        bullet_audio.play()
+        player_helper.play('qrc:/ztype/plasma.mp3')
 //        player_helper.play("ztype/plasma.mp3");
 
         console.log("player_helper");
@@ -302,69 +265,70 @@ Window {
         autoLoad: true
         autoPlay: true
         loops: Audio.Infinite
-        volume: 1
+        volume: 0.5
 //        source: "file:///home/jipai/Music/网易云音乐/魏小涵 - 飞雪玉花.mp3"
 //        source: "./ztype/endure.ogg"
-        source: "file:///home/jipai/git/ztype-qml/ztype/endure.ogg"
+//        source: "file:///home/jiyuhang/git/ztype-qml/ztype/endure.ogg"
+        source: "qrc:/ztype/endure.ogg"
 //        source: "file:///home/jipai/Desktop/endure.mp3"
 
 
     }
-    SoundEffect {
-        id: playSound
+//    SoundEffect {
+//        id: playSound
+////        autoLoad: true
+////        autoPlay: true
+//        loops: SoundEffect.Infinite
+////        source: "./ztype/endure.ogg"
+//        source: "file:///home/jipai/git/ztype-qml/ztype/endure.ogg"
+//    }
+//    Audio {
+//        id:redalert_audio
 //        autoLoad: true
-//        autoPlay: true
-        loops: SoundEffect.Infinite
-//        source: "./ztype/endure.ogg"
-        source: "file:///home/jipai/git/ztype-qml/ztype/endure.ogg"
-    }
-    Audio {
-        id:redalert_audio
-        autoLoad: true
-        loops: Audio.Infinite
-        source: "file:///home/jipai/git/ztype-qml/wav/红警原子弹声音.wav"
-    }
+//        loops: Audio.Infinite
+//        source: "file:///home/jipai/git/ztype-qml/wav/红警原子弹声音.wav"
+//    }
     Audio {
         id:bullet_audio
         autoLoad: true
 //        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
+        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
     }
-    Audio {
-        id:bullet_audio1
-        autoLoad: true
-//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
+//    Audio {
+//        id:bullet_audio1
+//        autoLoad: true
+////        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
 
-    }
-    Audio {
-        id:bullet_audio2
-        autoLoad: true
-//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
+//    }
+//    Audio {
+//        id:bullet_audio2
+//        autoLoad: true
+////        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
 
-    }
-    Audio {
-        id:bullet_audio3
-        autoLoad: true
-//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
+//    }
+//    Audio {
+//        id:bullet_audio3
+//        autoLoad: true
+////        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
 
-    }
-    Audio {
-        id:bullet_audio4
-        autoLoad: true
-//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
+//    }
+//    Audio {
+//        id:bullet_audio4
+//        autoLoad: true
+////        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
 
-    }
-    Audio {
-        id:bullet_audio5
-        autoLoad: true
-//        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
+//    }
+//    Audio {
+//        id:bullet_audio5
+//        autoLoad: true
+////        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
+//        source: "file:///home/jipai/git/ztype-qml/ztype/plasma.mp3"
 
-    }
+//    }
 
 //   /home/jipai/Music/网易云音乐
 

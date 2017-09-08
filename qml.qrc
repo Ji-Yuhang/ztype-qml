@@ -20,5 +20,7 @@
         <file>lodash_js.js</file>
         <file>ShoutScene.qml</file>
         <file>ListenScene.qml</file>
+        <file>ztype/plasma.mp3</file>
+        <file>ztype/endure.ogg</file>
     </qresource>
 </RCC>
