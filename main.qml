@@ -213,7 +213,7 @@ Window {
 //            tanks.push(tank)
 //            tank.start()
             console.log(lock_component, lock, x,y);
-            if (!root.start_time) root.start_time = Date.now()
+            if (!current_scene.start_time) current_scene.start_time = Date.now()
 
         } else {
             console.log(lock_component, "errString",component.errorString());
@@ -288,12 +288,13 @@ Window {
 //        loops: Audio.Infinite
 //        source: "file:///home/jipai/git/ztype-qml/wav/红警原子弹声音.wav"
 //    }
-    Audio {
-        id:bullet_audio
-        autoLoad: true
+//    Audio {
+//        id: bullet_audio
+//        autoLoad: true
 //        source: "file:///home/jipai/git/ztype-qml/wav/子弹.mp3"
-        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
-    }
+//        source: "qrc:/ztype/plasma.mp3"
+//        source: "file:///home/jiyuhang/git/ztype-qml/ztype/plasma.mp3"
+//    }
 //    Audio {
 //        id:bullet_audio1
 //        autoLoad: true

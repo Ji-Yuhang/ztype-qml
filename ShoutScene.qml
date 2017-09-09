@@ -86,8 +86,8 @@ Rectangle {
 
         Text {
             id: score
-            z: 3
-            visible: false
+            z: 6
+            visible: true
             color: "white"
             font {
                 pointSize: 20
@@ -97,8 +97,8 @@ Rectangle {
         }
         Text {
             id: start_time_text
-            z: 3
-            visible: false
+            z: 7
+            visible: true
             color: "white"
             font {
                 pointSize: 14
