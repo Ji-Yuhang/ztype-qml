@@ -54,6 +54,9 @@ void PlayerHelper::play(const QString &mp3_path)
      if (!player) {
          player = new QMediaPlayer;
          players_.push_back(player);
+         for (int i = 0; i < 10; i++){
+             players_.push_back(new QMediaPlayer);
+         }
      }
      if (mp3_path.contains("qrc:")) {
              qDebug() << "play qrc" << path << QUrl(path);

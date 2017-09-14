@@ -9,6 +9,8 @@ Rectangle {
         property var root: null
         property var words: []
         property var destroy_words: []
+        property var remain_words: []
+
         property var level_words: []
 
         property var start_time: null
@@ -20,12 +22,21 @@ Rectangle {
         property int level: 0
 
         Component.onCompleted: {
-            console.log('ShoutScene.onCompleted',root)
+            console.log('ShoutScene.onCompleted', root)
         }
 
         color: "black"
         anchors.fill: parent
         focus: true
+
+
+        function update_score(word){
+            console.log(view, word)
+            if (view.destroy_words.indexOf(word) == -1 ) view.destroy_words.push(word)
+            score.text = view.destroy_words.length.toString() +' / '+ view.words.length.toString()
+            score.update()
+            console.log('update_score',view.word, score.text)
+        }
 
         MouseArea {
             id:area
@@ -48,8 +59,18 @@ Rectangle {
             onTriggered: {
 //                (root,tanks,words, view, i)
                 var level = 0
-                var words = root.words.slice(0,4)
-                Ztype.create_n_tanks(view, words, level)
+                if (Lodash._.isEmpty(view.words)) {
+                    view.words = Lodash._.clone(root.words)
+                    view.remain_words = Lodash._.clone(root.words)
+                }
+
+                var four_words = Lodash._.slice(view.remain_words,0, 4)
+                view.remain_words = Lodash._.drop(view.remain_words,4)
+                view.level_words = four_words
+
+                Ztype.create_n_tanks(view, four_words, level)
+                view.level = view.level + 1
+
 //                Ztype.create_tank(root,root.tanks, root.words, view, 0)
 //                Ztype.create_tank(root,root.tanks, root.words, view, 1)
 //                Ztype.create_tank(root,root.tanks, root.words, view, 2)
@@ -92,7 +113,7 @@ Rectangle {
             font {
                 pointSize: 20
             }
-            text: destroy_words.length.toString() +' / '+ words.length.toString()
+            text: destroy_words.length.toString() +' / '+ view.words.length.toString()
             anchors.centerIn: parent
         }
         Text {
@@ -145,6 +166,11 @@ Rectangle {
 
                     }
                 }
+                if (!target_stack && view.tanks.length <= 0) {
+                    //
+                    timer.start()
+                }
+
 
 
 //                create_tank(0)

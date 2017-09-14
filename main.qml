@@ -23,6 +23,8 @@ Window {
 
 
     property var words: []
+    property var webster : {}
+
     property var destroy_words: []
     property var level_words: []
 
@@ -44,6 +46,9 @@ Window {
     Component.onCompleted: {
         console.log(JSON.stringify(Lodash._.chunk(["a", "b", "c", "d"], 2)));
         Ztype.init_words(root)
+        Ztype.init_webster(root)
+
+
 //        shout_scene_root = root
 //        listen_scene_root = root
     }

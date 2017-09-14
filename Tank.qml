@@ -6,6 +6,7 @@ Rectangle {
     property bool current: false
     property double image_x: iamge.x
     property double image_y: iamge.y
+    property var scene: NULL
 
     id: tank
 
@@ -62,7 +63,56 @@ Rectangle {
 
         anchors.centerIn: parent
     }
+    Text {
+        id: pron
+        visible: current
+        text: {
+            if (root && root.webster){
+                var webster_data = root.webster[word]
+                var yinjie = webster_data[1] || ''
+                var yinbiao = webster_data[2] || ''
 
+                console.log('webster_data', webster_data, yinjie, yinbiao)
+                return yinjie
+
+            }
+            return ''
+
+        }
+
+        color: current ? "orange":"white"
+        font {
+            pointSize: 14
+        }
+
+        anchors.top: text.bottom
+        anchors.left: text.left
+    }
+    Text {
+        id: yinbiao
+        visible: current
+        text: {
+            if (root && root.webster){
+                var webster_data = root.webster[word]
+                var yinjie = webster_data[1] || ''
+                var yinbiao = webster_data[2] || ''
+
+                console.log('webster_data', webster_data, yinjie, yinbiao)
+                return yinbiao
+
+            }
+            return ''
+
+        }
+
+        color: current ? "orange":"white"
+        font {
+            pointSize: 14
+        }
+
+        anchors.top: yinjie.bottom
+        anchors.left: yinjie.left
+    }
     Image {
         id: iamge
         width: 32
@@ -82,11 +132,28 @@ Rectangle {
         interval: 200
         repeat: true
         onTriggered: {
-            x += (Math.random() * 100 - 50) / 100
 //            if (x > parent.width) x -= 5
-            if (x < 0) x += 4
+            if (x < 0){
+                x += 4
+            } else if (scene && x > scene.width -10){
+                x -=4
+            } else {
+                x += (Math.random() * 100 - 50) / 100
+            }
 
-            y += Math.random()
+
+            if (scene && y > scene.height - 10){
+                y -= Math.random()
+
+            } else if (scene && y < 10){
+                y += Math.random()
+
+            } else {
+                y += Math.random()
+
+            }
+
+//            if ( y > )
             iamge.rotation += 10
 
         }

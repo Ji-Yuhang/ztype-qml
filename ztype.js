@@ -17,12 +17,13 @@ function init_words(root){
 
 //                var json = JSON.parse(doc)
 //                words = json.data.learnings.map(function(learn){return learn.word})
-            words = doc.split("\n").map(function(w){return w.replace("\r\n",'').replace("\r",'');}).filter(function(w){return w != '' && w.length>0})
+            var words = doc.split("\n").map(function(w){return w.replace("\r\n",'').replace("\r",'');}).filter(function(w){return w != '' && w.length>0})
             words = _.compact(words)
-            words = words.sort(function(a,b){return a.length - b.length})
-//            Lodash.
+//            words = words.sort(function(a,b){return a.length - b.length})
+
             console.log("read: " + words.length, words[0], words[words.length - 1])
 //                score.text = destroy_words.length.toString() +' / '+ words.length.toString()
+            root.words = words
 
         }
     }
@@ -33,6 +34,24 @@ function init_words(root){
 //        playSound.play()
 //        player_helper.play("/home/jipai/git/ztype-qml/ztype/endure.ogg")
 
+}
+function init_webster(root){
+    var request = new XMLHttpRequest
+    request.open("GET","qrc:/webster_mini.json")
+
+    request.onreadystatechange = function() {
+        if (request.readyState == XMLHttpRequest.DONE) {
+            var doc = request.responseText;
+            var json = JSON.parse(doc)
+//
+
+            var size = _.size(json)
+            console.log("read webster.json size: ", size)
+            root.webster = json
+
+        }
+    }
+    request.send()
 }
 
 function random_word(tanks,words) {
@@ -126,12 +145,13 @@ function create_n_tanks(parent_view, words, level) {
 
             // if (i == 1) word = "café"
             var tank = component.createObject( parent_view, {
+                                                  scene: parent_view,
                                                   "x": x,
                                                   "y": y,
                                                   word: word,
                                                   visible_word: confuse_word(word, level)
                                               });
-//            tank.word_destroy.connect(update_score)
+            tank.word_destroy.connect(update_score)
 //            tank.start()
             console.log(component, tank, x,y, word);
             return tank
@@ -146,12 +166,7 @@ function create_n_tanks(parent_view, words, level) {
 }
 
 
-//function update_score(word){
-//    if (destroy_words.indexOf(word) == -1 ) destroy_words.push(word)
-//    score.text = destroy_words.length.toString() +' / '+ words.length.toString()
-//    score.update()
-//    console.log('update_score',word,score.text)
-//}
+
 
 //function create_tank(root,tanks,words, view,i) {
 //    if (!component)
