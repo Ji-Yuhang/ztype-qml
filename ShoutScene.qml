@@ -104,7 +104,6 @@ Rectangle {
                 }
             }
         }
-
         Text {
             id: score
             z: 6
@@ -129,6 +128,9 @@ Rectangle {
             anchors.verticalCenter: score.verticalCenter
             anchors.horizontalCenter: score.horizontalCenter
         }
+
+
+
 
 
         Oppressor {
@@ -259,7 +261,7 @@ Rectangle {
 //                            component
                             play_bullet_audio()
 //                            exists
-                            var local_mp3_path = "/home/jipai/vimrc/shanbaymp3/"+target_stack.word+".mp3"
+                            var local_mp3_path = "/home/jiyuhang/vimrc/shanbaymp3/"+target_stack.word+".mp3"
                             if (player_helper.exists(local_mp3_path)){
                                 player_helper.play(local_mp3_path)
                             } else {
@@ -306,7 +308,7 @@ Rectangle {
 
                             target_stack.visible_word = ""
                             target_stack.custom_destroy()
-                        var local_mp3_path = "/home/jipai/vimrc/shanbaymp3/"+target_stack.word+".mp3"
+                        var local_mp3_path = "/home/jiyuhang/vimrc/shanbaymp3/"+target_stack.word+".mp3"
                         if (player_helper.exists(local_mp3_path)){
                             player_helper.play(local_mp3_path)
                         } else {

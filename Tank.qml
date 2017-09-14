@@ -1,5 +1,7 @@
 ﻿import QtQuick 2.0
 import "qrc:/shanbay.js" as Shanbay
+import "qrc:/lodash_qml.js" as Lodash
+
 Rectangle {
     property string word: ""
     property string visible_word: ""
@@ -63,56 +65,87 @@ Rectangle {
 
         anchors.centerIn: parent
     }
-    Text {
-        id: pron
-        visible: current
-        text: {
-            if (root && root.webster){
-                var webster_data = root.webster[word]
-                var yinjie = webster_data[1] || ''
-                var yinbiao = webster_data[2] || ''
-
-                console.log('webster_data', webster_data, yinjie, yinbiao)
-                return yinjie
-
-            }
-            return ''
-
-        }
-
-        color: current ? "orange":"white"
-        font {
-            pointSize: 14
-        }
-
+    Rectangle{
+        color: current ? "#132B2B" : 'black' //transparent
         anchors.top: text.bottom
-        anchors.left: text.left
-    }
-    Text {
-        id: yinbiao
-        visible: current
-        text: {
-            if (root && root.webster){
-                var webster_data = root.webster[word]
-                var yinjie = webster_data[1] || ''
-                var yinbiao = webster_data[2] || ''
+        anchors.horizontalCenter: text.horizontalCenter
+        width: yinjie.width +16
+        height: {
+            if (current) {
+                if (root && root.webster){
+                    var h = 25
+                    var webster_data = root.webster[word]
+                    var yinjie = Lodash._.get(webster_data, '1')
+                    var yinbiao = Lodash._.get(webster_data, '2')
+                    if (yinjie && yinbiao) return h*2
+                    if (yinjie && !yinbiao) return h
+                    if (!yinjie && yinbiao) return h
+                    if (!yinjie && !yinbiao) return 0
 
-                console.log('webster_data', webster_data, yinjie, yinbiao)
-                return yinbiao
+                } else {
+                    return 0
+                }
+            } else {
+                return 0
+            }
+        }
+        Text {
+            id: yinjie
+            visible: current
+            z:3
+//            width: text.width +16
+//            height: 32
+            text: {
+                if (root && root.webster){
+                    var webster_data = root.webster[word]
+                    var yinjie = Lodash._.get(webster_data, '1')
+                    var yinbiao = Lodash._.get(webster_data, '2')
+
+                    console.log('webster_data', webster_data, yinjie, yinbiao)
+                    return yinjie || ''
+
+                }
+                return ''
 
             }
-            return ''
 
+            color: current ? "orange":"white"
+            font {
+                pointSize: 14
+            }
+
+//            anchors.top: text.bottom
+//            anchors.horizontalCenter: text.horizontalCenter
         }
+        Text {
+            id: yinbiao
+            visible: current
+            z:3
+            text: {
+                if (root && root.webster){
+                    var webster_data = root.webster[word]
+                    var yinjie = Lodash._.get(webster_data, '1')
+                    var yinbiao = Lodash._.get(webster_data, '2')
 
-        color: current ? "orange":"white"
-        font {
-            pointSize: 14
+                    console.log('webster_data', webster_data, yinjie, yinbiao)
+                    return yinbiao || ''
+
+                }
+                return ''
+
+            }
+
+            color: current ? "orange":"white"
+            font {
+                pointSize: 14
+            }
+
+            anchors.top: yinjie.bottom
+            anchors.horizontalCenter: yinjie.horizontalCenter
         }
-
-        anchors.top: yinjie.bottom
-        anchors.left: yinjie.left
     }
+
+
     Image {
         id: iamge
         width: 32
