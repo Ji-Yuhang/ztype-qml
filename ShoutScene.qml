@@ -247,7 +247,9 @@ Rectangle {
                             lock_tank(target_stack)
 
                             var temp = ""
-                            for (var i = 1; i < target_stack.visible_word.length; i++) {
+                            var i = 1
+                            if (target_stack.visible_word[1] == '·' || target_stack.visible_word[1] == "'"  || target_stack.visible_word[1] == ",") i = 2
+                            for (; i < target_stack.visible_word.length; i++) {
                                 temp += target_stack.visible_word[i]
                             }
 
@@ -261,7 +263,7 @@ Rectangle {
 //                            component
                             play_bullet_audio()
 //                            exists
-                            var local_mp3_path = "/home/jiyuhang/vimrc/shanbaymp3/"+target_stack.word+".mp3"
+                            var local_mp3_path = "/home/jipai/vimrc/shanbaymp3/"+target_stack.word+".mp3"
                             if (player_helper.exists(local_mp3_path)){
                                 player_helper.play(local_mp3_path)
                             } else {
@@ -308,7 +310,7 @@ Rectangle {
 
                             target_stack.visible_word = ""
                             target_stack.custom_destroy()
-                        var local_mp3_path = "/home/jiyuhang/vimrc/shanbaymp3/"+target_stack.word+".mp3"
+                        var local_mp3_path = "/home/jipai/vimrc/shanbaymp3/"+target_stack.word+".mp3"
                         if (player_helper.exists(local_mp3_path)){
                             player_helper.play(local_mp3_path)
                         } else {
@@ -330,7 +332,9 @@ Rectangle {
 //                        target_stack
                     } else {
                         var temp = ""
-                        for (var i = 1; i < target_stack.visible_word.length; i++) {
+                        var i = 1
+                        if (target_stack.visible_word[1] == '·' || target_stack.visible_word[1] == "'" || target_stack.visible_word[1] == ",") i = 2
+                        for (; i < target_stack.visible_word.length; i++) {
                             temp += target_stack.visible_word[i]
                         }
 

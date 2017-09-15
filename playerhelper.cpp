@@ -11,11 +11,35 @@ PlayerHelper::PlayerHelper(QQuickItem *parent) : QQuickItem(parent)
     for (int i = 0; i < 10; i++){
         players_.push_back(new QMediaPlayer);
     }
+    QFile file(":/bgl_java_output.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "can not open file qrc:/bgl_java_output.txt ";
+        return;
+
+    }
+
+    while (!file.atEnd()) {
+        QString line = file.readLine();
+        QStringList parts = line.split("!@#$");
+        QString head_word = parts.at(0);
+        QString word = parts.at(1);
+        QString definition = parts.at(2);
+        QString phonetics = parts.at(3);
+        if (!bgls_.contains(word))
+            bgls_.insert(word, parts );
+    }
+    qDebug() << "bgls_ insert "<< bgls_.size();
 
 }
+
 bool  PlayerHelper::exists(const QString& file_path)
 {
     return QFileInfo::exists(file_path);
+}
+QStringList PlayerHelper::bgl(const QString& word){
+    qDebug() << "PlayerHelper get bgl"<<word<< bgls_.size();
+
+    return bgls_.value(word);
 }
 
 void PlayerHelper::play(const QString &mp3_path)

@@ -144,12 +144,39 @@ function create_n_tanks(parent_view, words, level) {
 
 
             // if (i == 1) word = "café"
+            var webster_data  = root.bgl(word)
+            var yinjie_yinbiao_text = _.get(webster_data, '3')
+            var yinjie_yinbiao =  _.split(yinjie_yinbiao_text, '||')
+            var yinjie = _.get(yinjie_yinbiao, '0')
+            var yinbiao = _.get(yinjie_yinbiao, '1')
+            if (yinbiao) {
+                while(_.includes(yinbiao, 'charset')) {
+
+                    yinbiao = yinbiao.replace('<charset c=T>','&#x')
+                    yinbiao = yinbiao.replace('</charset>','')
+                }
+            }
+            if (yinjie) {
+                while(_.includes(yinjie, 'charset')) {
+                    yinjie = yinjie.replace('<charset c=T>','&#x')
+                    yinjie = yinjie.replace('</charset>','')
+                }
+            }
+            if (!yinjie) yinjie = word
+            if (yinjie && !yinbiao) yinjie = word
+
+            var zh = _.get(webster_data, '2')
+
             var tank = component.createObject( parent_view, {
                                                   scene: parent_view,
                                                   "x": x,
                                                   "y": y,
                                                   word: word,
-                                                  visible_word: confuse_word(word, level)
+                                                  visible_word: confuse_word(yinjie || word, level),
+                                                  webster_data: webster_data,
+                                                  yinjie: yinjie,
+                                                  yinbiao: yinbiao,
+                                                  zh: zh
                                               });
             tank.word_destroy.connect(update_score)
 //            tank.start()

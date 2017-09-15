@@ -11,7 +11,7 @@ Window {
     id: root
 
 //    property alias shout_scene_root: shout_scene.root
-//    property alias listen_scene_root: listen_scene.root
+//    property alias bgl: player_helper.bgl
 
 
     property Component component: null
@@ -36,6 +36,7 @@ Window {
     property var last_buller_audio: null
     property var level: 0
 
+
     modality: Qt.WindowModal
 
     visible: true
@@ -46,12 +47,18 @@ Window {
     Component.onCompleted: {
         console.log(JSON.stringify(Lodash._.chunk(["a", "b", "c", "d"], 2)));
         Ztype.init_words(root)
-        Ztype.init_webster(root)
+//        Ztype.init_webster(root)
 
 
 //        shout_scene_root = root
 //        listen_scene_root = root
     }
+    function bgl(word){
+        var info = player_helper.bgl(word)
+        console.log('get bgl',word, info)
+        return info
+    }
+
     PlayerHelper {
         id: player_helper
     }

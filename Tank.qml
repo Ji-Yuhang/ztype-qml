@@ -9,6 +9,10 @@ Rectangle {
     property double image_x: iamge.x
     property double image_y: iamge.y
     property var scene: NULL
+    property var webster_data: null
+    property var yinjie: null
+    property var yinbiao: null
+    property var zh: null
 
     id: tank
 
@@ -72,11 +76,13 @@ Rectangle {
         width: yinjie.width +16
         height: {
             if (current) {
-                if (root && root.webster){
+                if (webster_data){
                     var h = 25
-                    var webster_data = root.webster[word]
-                    var yinjie = Lodash._.get(webster_data, '1')
-                    var yinbiao = Lodash._.get(webster_data, '2')
+//                    var webster_data  = root.bgl(word)
+//                    var yinjie_yinbiao =  Lodash._.split(Lodash._.get(webster_data, '3'), '||')
+//                    var yinjie = Lodash._.get(yinjie_yinbiao, '0')
+//                    var yinbiao = Lodash._.get(yinjie_yinbiao, '1')
+//                    var zh = Lodash._.get(webster_data, '2')
                     if (yinjie && yinbiao) return h*2
                     if (yinjie && !yinbiao) return h
                     if (!yinjie && yinbiao) return h
@@ -90,24 +96,48 @@ Rectangle {
             }
         }
         Text {
-            id: yinjie
-            visible: current
+            id: yinjie_id
+            visible: false //current
             z:3
 //            width: text.width +16
 //            height: 32
-            text: {
-                if (root && root.webster){
-                    var webster_data = root.webster[word]
-                    var yinjie = Lodash._.get(webster_data, '1')
-                    var yinbiao = Lodash._.get(webster_data, '2')
+            textFormat: Text.RichText
+            text: yinjie || ''
 
-                    console.log('webster_data', webster_data, yinjie, yinbiao)
-                    return yinjie || ''
+//            text: {
+//                if (root && root.webster){
 
-                }
-                return ''
+////                    var webster_data  = root.bgl(word)
+//                    var yinjie_yinbiao =  Lodash._.split(Lodash._.get(webster_data, '3'), '||')
+//                    var yinjie = Lodash._.get(yinjie_yinbiao, '0')
+//                    var yinbiao = Lodash._.get(yinjie_yinbiao, '1')
+//                    var zh = Lodash._.get(webster_data, '2')
+//                    if (yinbiao) {
+//                        while(Lodash._.includes(yinbiao, 'charset')) {
 
-            }
+//                             yinbiao = yinbiao.replace('<charset c=T>','&#x')
+//                             yinbiao = yinbiao.replace('</charset>','')
+//                        }
+//                    }
+//                    if (yinjie) {
+//                        while(Lodash._.includes(yinjie, 'charset')) {
+//                            yinjie = yinjie.replace('<charset c=T>','&#x')
+//                            yinjie = yinjie.replace('</charset>','')
+//                        }
+//                    }
+////                    var webster_data = root.webster[word]
+////                    var yinjie = Lodash._.get(webster_data, '1')
+////                    var yinbiao = Lodash._.get(webster_data, '2')
+
+//                    console.log('webster_data', webster_data, yinjie, yinbiao)
+
+//                    if (yinjie == 'null') visible = false
+//                    return yinjie || ''
+
+//                }
+//                return ''
+
+//            }
 
             color: current ? "orange":"white"
             font {
@@ -118,30 +148,97 @@ Rectangle {
 //            anchors.horizontalCenter: text.horizontalCenter
         }
         Text {
-            id: yinbiao
+            id: yinbiao_id
             visible: current
             z:3
-            text: {
-                if (root && root.webster){
-                    var webster_data = root.webster[word]
-                    var yinjie = Lodash._.get(webster_data, '1')
-                    var yinbiao = Lodash._.get(webster_data, '2')
+            textFormat: Text.RichText
+            text: yinbiao || ''
+//            text: {
+//                if (root && root.webster){
+////                    var webster_data  = root.bgl(word)
+//                    var yinjie_yinbiao =  Lodash._.split(Lodash._.get(webster_data, '3'), '||')
+//                    var yinjie = Lodash._.get(yinjie_yinbiao, '0')
+//                    var yinbiao = Lodash._.get(yinjie_yinbiao, '1')
+//                    if (yinbiao) {
+//                        while(Lodash._.includes(yinbiao, 'charset')) {
 
-                    console.log('webster_data', webster_data, yinjie, yinbiao)
-                    return yinbiao || ''
+//                             yinbiao = yinbiao.replace('<charset c=T>','&#x')
+//                             yinbiao = yinbiao.replace('</charset>','')
+//                        }
+//                    }
+//                    if (yinjie) {
+//                        while(Lodash._.includes(yinjie, 'charset')) {
+//                            yinjie = yinjie.replace('<charset c=T>','&#x')
+//                            yinjie = yinjie.replace('</charset>','')
+//                        }
+//                    }
+//                    var zh = Lodash._.get(webster_data, '2')
 
-                }
-                return ''
+//                    console.log('webster_data', webster_data, yinjie, yinbiao)
+//                    if (yinbiao == 'null') visible = false
 
-            }
+//                    return yinbiao || ''
+
+//                }
+//                return ''
+
+//            }
 
             color: current ? "orange":"white"
             font {
                 pointSize: 14
             }
 
-            anchors.top: yinjie.bottom
-            anchors.horizontalCenter: yinjie.horizontalCenter
+            anchors.top: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+        Text {
+            id: cn_id
+            visible: current
+            z:3
+//            width: text.width +16
+//            height: 32
+            text: zh || ''
+//            text: {
+//                if (root && root.webster){
+
+//                    var webster_data  = root.bgl(word)
+//                    var yinjie_yinbiao =  Lodash._.split(Lodash._.get(webster_data, '3'), '||')
+//                    var yinjie = Lodash._.get(yinjie_yinbiao, '0')
+//                    var yinbiao = Lodash._.get(yinjie_yinbiao, '1')
+
+//                    if (yinbiao) {
+//                        while(Lodash._.includes(yinbiao, 'charset')) {
+
+//                             yinbiao = yinbiao.replace('<charset c=T>','&#x')
+//                             yinbiao = yinbiao.replace('</charset>','')
+//                        }
+//                    }
+//                    if (yinjie) {
+//                        while(Lodash._.includes(yinjie, 'charset')) {
+//                            yinjie = yinjie.replace('<charset c=T>','&#x')
+//                            yinjie = yinjie.replace('</charset>','')
+//                        }
+//                    }
+//                    var zh = Lodash._.get(webster_data, '2')
+
+//                    console.log('webster_data', webster_data, yinjie, yinbiao)
+//                    if (zh == 'null') visible = false
+
+//                    return zh || ''
+
+//                }
+//                return ''
+
+//            }
+
+            color: current ? "orange":"white"
+            font {
+                pointSize: 14
+            }
+
+            anchors.top: yinbiao_id.bottom
+            anchors.horizontalCenter: yinbiao_id.horizontalCenter
         }
     }
 

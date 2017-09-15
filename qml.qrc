@@ -23,5 +23,6 @@
         <file>ztype/plasma.mp3</file>
         <file>ztype/endure.ogg</file>
         <file>webster_mini.json</file>
+        <file>bgl_java_output.txt</file>
     </qresource>
 </RCC>
