@@ -259,7 +259,7 @@ Rectangle {
 //    Component.onCompleted:
     Timer {
         id:timer
-        interval: 200
+        interval: 400
         repeat: true
         onTriggered: {
 //            if (x > parent.width) x -= 5
