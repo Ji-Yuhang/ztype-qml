@@ -1,7 +1,9 @@
 import QtQuick 2.0
 import "qrc:/ztype.js" as Ztype
 import "qrc:/lodash_qml.js" as Lodash
-
+//import QtQuick.VirtualKeyboard 2.1
+//import QtQuick.VirtualKeyboard.Styles 2.2
+//import QtQuick.VirtualKeyboard.Settings 2.2
 Rectangle {
 //    Rectangle {
         id: view
@@ -168,7 +170,7 @@ Rectangle {
                 console.log('KeyEnter')
 
                 if (target_stack && target_stack.word){
-                    var local_mp3_path = "/home/jipai/vimrc/shanbaymp3/"+target_stack.word+".mp3"
+                    var local_mp3_path = "/home/jiyuhang/vimrc/shanbaymp3/"+target_stack.word+".mp3"
                     if (player_helper.exists(local_mp3_path)){
                         player_helper.play(local_mp3_path)
                     } else {
@@ -272,7 +274,7 @@ Rectangle {
 //                            component
                             play_bullet_audio()
 //                            exists
-                            var local_mp3_path = "/home/jipai/vimrc/shanbaymp3/"+target_stack.word+".mp3"
+                            var local_mp3_path = "/home/jiyuhang/vimrc/shanbaymp3/"+target_stack.word+".mp3"
                             if (player_helper.exists(local_mp3_path)){
                                 player_helper.play(local_mp3_path)
                             } else {

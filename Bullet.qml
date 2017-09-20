@@ -11,7 +11,7 @@ Item {
     property var to_x: null
     property var to_y: null
     property var target_stack: null
-    property double speed: 15.0
+    property double speed: 40.0
     property double last_rotation: 0
     property double last_distance: 0
     signal rotationChanged(double rotation)
@@ -90,7 +90,7 @@ Item {
     }
     Timer {
         id: timer
-           interval: 10;
+           interval: 30;
            running: true;
            repeat: true
            onTriggered: {
