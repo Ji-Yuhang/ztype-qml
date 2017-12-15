@@ -57,7 +57,7 @@ Rectangle {
         }
         Timer {
             id: timer
-            interval: 100
+            interval: 200
             onTriggered: {
 //                (root,tanks,words, view, i)
                 var level = 0

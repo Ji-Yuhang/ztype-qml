@@ -185,7 +185,7 @@ Window {
     Timer {
         id: grid_timer
         property int count: 0
-        interval: 100
+        interval: 200
         running: true;
         repeat: true
 

@@ -8,7 +8,9 @@ function func() {
 function init_words(root){
     console.log('init_words',JSON.stringify(_.chunk(["a", "b", "c", "d"], 2)));
     var request = new XMLHttpRequest
-    request.open("GET","qrc:/collins_1_list_1.txt")
+//    request.open("GET","qrc:/collins_1_list_1.txt")
+    request.open("GET","qrc:/colins_1_list_4.txt")
+
 //         request.open("GET","https://iamyuhang.com/api/v1/words/learnings/?token=")
 
     request.onreadystatechange = function() {
