@@ -10,7 +10,7 @@ function init_words(root){
     var request = new XMLHttpRequest
 //    request.open("GET","qrc:/collins_1_list_1.txt")
     request.open("GET","qrc:/colins_1_list_4.txt")
-
+//    request.open("GET","qrc:/collins_1_list_2.txt")
 //         request.open("GET","https://iamyuhang.com/api/v1/words/learnings/?token=")
 
     request.onreadystatechange = function() {
@@ -255,4 +255,10 @@ function create_bullet(parent_view, oppressor, target_stack,x,y){
 function changed_rotation(ro){
     oppressor.rotation = ro
 
+}
+function is_omit_letter(letter){
+    if (letter == '·' || letter == "'"  || letter == "," )
+        return true
+
+    return false
 }

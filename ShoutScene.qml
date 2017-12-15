@@ -30,6 +30,12 @@ Rectangle {
         color: "black"
         anchors.fill: parent
         focus: true
+        onRotationChanged: function(ro) {
+            oppressor.rotation = ro
+            console.log('onRotationChanged', ro)
+
+        }
+
 
 
         function update_score(word){
@@ -71,6 +77,8 @@ Rectangle {
                 view.level_words = four_words
 
                 Ztype.create_n_tanks(view, four_words, level)
+//                Ztype.create_n_tanks(view, ['limitless'], level)
+
                 view.level = view.level + 1
 
 //                Ztype.create_tank(root,root.tanks, root.words, view, 0)
@@ -250,7 +258,8 @@ Rectangle {
 
                             var temp = ""
                             var i = 1
-                            if (target_stack.visible_word[1] == '·' || target_stack.visible_word[1] == "'"  || target_stack.visible_word[1] == ",") i = 2
+                            if (Ztype.is_omit_letter(target_stack.visible_word[0])) i = 2
+                            if (Ztype.is_omit_letter(target_stack.visible_word[1])) i = 2
                             for (; i < target_stack.visible_word.length; i++) {
                                 temp += target_stack.visible_word[i]
                             }
@@ -335,7 +344,8 @@ Rectangle {
                     } else {
                         var temp = ""
                         var i = 1
-                        if (target_stack.visible_word[1] == '·' || target_stack.visible_word[1] == "'" || target_stack.visible_word[1] == ",") i = 2
+                        if (Ztype.is_omit_letter(target_stack.visible_word[0])) i = 2
+                        if (Ztype.is_omit_letter(target_stack.visible_word[1])) i = 2
                         for (; i < target_stack.visible_word.length; i++) {
                             temp += target_stack.visible_word[i]
                         }

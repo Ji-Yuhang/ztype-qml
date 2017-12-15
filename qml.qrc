@@ -25,5 +25,7 @@
         <file>webster_mini.json</file>
         <file>bgl_java_output.txt</file>
         <file>colins_1_list_4.txt</file>
+        <file>collins_1_list_2.txt</file>
+        <file>collins_1_list_3.txt</file>
     </qresource>
 </RCC>

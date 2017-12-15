@@ -95,7 +95,37 @@ Window {
         z: 4
         anchors.centerIn: parent
         spacing: 2
+        Button {
+            id: load_collins
+            text: "加载单词"
+            background: Rectangle {
+                      implicitWidth: 100
+                      implicitHeight: 40
+                      opacity: enabled ? 1 : 0.3
+                      border.color: load_collins.down ? "#17a81a" : "#21be2b"
+                      border.width: 1
+                      radius: 2
+                      color: '#132B2B'
 
+                  }
+            contentItem: Text {
+                      text: load_collins.text
+                      font: load_collins.font
+                      opacity: enabled ? 1.0 : 0.3
+                      color: load_collins.down ? "#132B2B" : "#21be2b"
+                      horizontalAlignment: Text.AlignHCenter
+                      verticalAlignment: Text.AlignVCenter
+                      elide: Text.ElideRight
+                  }
+                onClicked: {
+//                    column_buttons.visible = false
+//                    shout_scene.visible = true
+//                    shout_scene.focus = true
+
+//                    listen_scene.visible = false
+//                    current_scene = shout_scene
+                }
+        }
         Button {
             id: shout_button
             text: "射击模式"
